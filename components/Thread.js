@@ -4,7 +4,7 @@ import { Button } from "semantic-ui-react";
 function Thread({ comments, thread }) {
   return (
     <div>
-      Hello world
+      Hello world ________________________________
       {thread?.data?.identifier}
       ________________________________
       {comments?.success &&

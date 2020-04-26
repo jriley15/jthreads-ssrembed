@@ -1,19 +1,16 @@
-import Head from "next/head";
+import Link from "next/link";
 import Thread from "../components/Thread";
 import fetch from "node-fetch";
+import { Button } from "semantic-ui-react";
 
 export default function Index(props) {
   return (
     <>
-      <Head>
-        <title>JThreads</title>
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="stylesheet"
-          href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
-        />
-      </Head>
       <Thread {...props} />
+
+      <Link href="/test">
+        <Button>Go to test</Button>
+      </Link>
     </>
   );
 }
