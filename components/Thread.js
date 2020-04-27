@@ -1,16 +1,22 @@
-import React from "react";
-import { Button } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Comment } from "semantic-ui-react";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../redux/authSlice";
+import styles from "./Thread.module.scss";
+import Box from "./shared/Box";
+import Heading from "./Heading";
 
-function Thread({ comments, thread }) {
+function Thread(props) {
+  const { isAuthenticated } = useSelector(selectAuth);
+
+  const thread = props.thread.data;
+  const comments = props.comments.data;
+
   return (
-    <div>
-      Hello world ________________________________
-      {thread?.data?.identifier}
-      ________________________________
-      {comments?.success &&
-        comments.data.map((comment) => (
-          <div key={comment.commentId}>{comment.body}</div>
-        ))}
+    <div id="jthread-container">
+      <Comment.Group className={styles["main-comment-group"]} size="large">
+        <Heading thread={thread} />
+      </Comment.Group>
     </div>
   );
 }

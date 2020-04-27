@@ -1,35 +1,48 @@
-import Link from "next/link";
 import Thread from "../components/Thread";
 import fetch from "node-fetch";
-import { Button } from "semantic-ui-react";
+import Head from "next/head";
+import { parse } from "cookie";
+import jwtDecode from "jwt-decode";
 
 export default function Index(props) {
   return (
     <>
+      <Head>
+        <title>JThreads</title>
+      </Head>
       <Thread {...props} />
-
-      <Link href="/test">
-        <Button>Go to test</Button>
-      </Link>
     </>
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  // Check if token in cookies
+  const { token } = parse(context.req.headers.cookie);
+
+  // Parse out claims
+  let claims = token ? jwtDecode(token) : undefined;
+
+  // Don't pass claims if token is expired
+  if (claims?.exp * 1000 <= new Date().getTime()) {
+    claims = undefined;
+  }
+
+  const { namespaceId, threadId } = context.query;
+
   // Fetch data from external API
   const threadFetch = fetch(`https://jthreadsapi.jrdn.tech/Thread/Init`, {
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      identifier: "post-1",
-      namespaceId: 2,
+      identifier: threadId,
+      namespaceId: namespaceId,
     }),
     method: "POST",
   });
 
   const commentsFetch = fetch(
-    `https://jthreadsapi.jrdn.tech/Comment/Search?threadIdentifier=post-1&namespaceId=2`
+    `https://jthreadsapi.jrdn.tech/Comment/Search?threadIdentifier=${threadId}&namespaceId=${namespaceId}`
   );
 
   let [threadResponse, commentsResponse] = await Promise.all([
@@ -42,8 +55,9 @@ export async function getServerSideProps() {
   // Pass data to the page via props
   return {
     props: {
-      thread: threadResponse ?? undefined,
-      comments: commentsResponse ?? undefined,
+      thread: threadResponse ?? null,
+      comments: commentsResponse ?? null,
+      claims: claims ?? null,
     },
   };
 }

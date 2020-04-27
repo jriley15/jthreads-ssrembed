@@ -1,19 +1,24 @@
-import "../assets/styles/index.scss";
-import Head from "next/head";
+import "../public/index.scss";
+import { Provider } from "react-redux";
+import store from "../redux/store";
+import withRedux from "next-redux-wrapper";
+import { authenticate } from "../redux/authSlice";
+import { useEffect } from "react";
 
 // This default export is required in a new `pages/_app.js` file.
-export default function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, store }) {
+  // Initialize auth state
+  if (pageProps?.claims) {
+    store.dispatch(authenticate(pageProps.claims));
+  }
+
   return (
-    <>
-      <Head>
-        <title>JThreads</title>
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="stylesheet"
-          href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
-        />
-      </Head>
+    <Provider store={store}>
       <Component {...pageProps} />
-    </>
+    </Provider>
   );
 }
+
+const makeStore = () => store;
+
+export default withRedux(makeStore)(MyApp);
