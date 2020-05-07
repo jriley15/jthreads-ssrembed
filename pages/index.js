@@ -17,7 +17,9 @@ export default function Index(props) {
 
 export async function getServerSideProps(context) {
   // Check if token in cookies
-  const { token } = parse(context.req.headers.cookie);
+  const tokenCookie = context.req.headers.cookie;
+
+  const token = tokenCookie ? parse(tokenCookie).token : null;
 
   // Parse out claims
   let claims = token ? jwtDecode(token) : undefined;
