@@ -1,5 +1,5 @@
 import React from "react";
-import { Comment } from "semantic-ui-react";
+import { Comment, Icon } from "semantic-ui-react";
 import { getDateString } from "../util/dateHelper";
 import CommentBody from "./CommentBody";
 import styles from "../public/styles/Comments.module.scss";
@@ -33,6 +33,35 @@ export default function Comments({ comments }) {
             <Comment.Text>
               <CommentBody body={comment.body} />
             </Comment.Text>
+            <Comment.Actions onClick={() => {}}>
+              <Comment.Action onClick={() => {}}>Reply</Comment.Action>
+              <Comment.Action>|</Comment.Action>
+              <Comment.Action>
+                <span className={`${styles.action} ${styles.likes}`}>
+                  {comment.likes}
+                </span>
+                <Icon name="thumbs up" onClick={() => {}} />
+              </Comment.Action>
+              <Comment.Action>
+                <span className={`${styles.action} ${styles.dislikes}`}>
+                  {comment.dislikes}
+                </span>
+
+                <Icon name="thumbs down" onClick={() => {}} />
+              </Comment.Action>
+              {comment.replyCount > 0 && (
+                <>
+                  <Comment.Action>|</Comment.Action>
+                  <Comment.Action onClick={() => {}}>
+                    <Icon
+                      name={comment.showReplies ? "caret up" : "caret down"}
+                    />
+                    {comment.replyCount +
+                      (comment.replyCount > 1 ? " replies" : " reply")}
+                  </Comment.Action>
+                </>
+              )}
+            </Comment.Actions>
           </Comment.Content>
         </Comment>
       ))}

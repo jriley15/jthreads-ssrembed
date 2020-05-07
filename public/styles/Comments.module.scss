@@ -9,3 +9,15 @@
   margin: 0 !important;
   border-radius: 10px !important;
 }
+
+.action {
+  padding-right: 0.3rem;
+
+  &.likes {
+    color: #2185d0;
+  }
+
+  &.dislikes {
+    color: red;
+  }
+}
