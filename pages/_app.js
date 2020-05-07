@@ -1,4 +1,5 @@
-import "../public/index.scss";
+import "../public/styles/index.scss";
+import "semantic-ui-css/semantic.min.css";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 import withRedux from "next-redux-wrapper";
