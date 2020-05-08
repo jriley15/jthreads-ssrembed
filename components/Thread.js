@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Comment, Divider } from "semantic-ui-react";
+import { Divider, Comment as SemanticComment } from "semantic-ui-react";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/authSlice";
 import styles from "../public/styles/Thread.module.scss";
@@ -10,6 +10,7 @@ import Filters from "./Filters";
 import CreateComment from "./CreateComment";
 import useComments from "../hooks/useComments";
 import { selectThread } from "../redux/threadSlice";
+import Comment from "./Comment";
 
 function Thread() {
   const { isAuthenticated } = useSelector(selectAuth);
@@ -18,7 +19,7 @@ function Thread() {
 
   return (
     <div id="jthread-container">
-      <Comment.Group className={styles.mainCommentGroup} size="large">
+      <SemanticComment.Group className={styles.mainCommentGroup} size="large">
         <Heading thread={thread} />
         <Divider />
         <Box justify="space-between" alignItems="flex-start">
@@ -37,7 +38,7 @@ function Thread() {
             />
           ))}
         </div>
-      </Comment.Group>
+      </SemanticComment.Group>
     </div>
   );
 }
