@@ -8,8 +8,9 @@ export default function CreateComment() {
   const { isAuthenticated } = useSelector(selectAuth);
   const [commentLoading, setCommentLoading] = useState(false);
   const [comment, setComment] = useState("");
-  const { data, error } = useSWR("https://localhost:44369/User/Me", (url) =>
-    fetch(url, { credentials: "include" })
+  const { data, error } = useSWR(
+    "https://jthreadsapi.jrdn.tech/User/Me",
+    (url) => fetch(url, { credentials: "include" })
   );
   const [user, setUser] = useState();
 

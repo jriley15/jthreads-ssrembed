@@ -8,13 +8,13 @@ import Heading from "./Heading";
 import Stats from "./Stats";
 import Filters from "./Filters";
 import CreateComment from "./CreateComment";
-import Comments from "./Comments";
+import useComments from "../hooks/useComments";
+import { selectThread } from "../redux/threadSlice";
 
-function Thread(props) {
+function Thread() {
   const { isAuthenticated } = useSelector(selectAuth);
-
-  const thread = props.thread.data;
-  const comments = props.comments.data;
+  const { comments } = useComments();
+  const { thread } = useSelector(selectThread);
 
   return (
     <div id="jthread-container">
@@ -29,7 +29,13 @@ function Thread(props) {
           <CreateComment />
         </Box>
         <div className={styles.commentscontainer}>
-          <Comments comments={comments} />
+          {comments?.map((comment, commentIndex) => (
+            <Comment
+              key={comment.commentId}
+              commentIndex={commentIndex}
+              comment={comment}
+            />
+          ))}
         </div>
       </Comment.Group>
     </div>

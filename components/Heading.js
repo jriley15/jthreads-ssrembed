@@ -4,6 +4,7 @@ import Box from "./shared/Box";
 import { Icon, Header, Dropdown } from "semantic-ui-react";
 import { selectAuth } from "../redux/authSlice";
 import { useSelector } from "react-redux";
+import { selectThread } from "../redux/threadSlice";
 
 export default function Heading({ thread }) {
   const { isAuthenticated } = useSelector(selectAuth);
@@ -18,7 +19,7 @@ export default function Heading({ thread }) {
       </Box>
       <Dropdown
         direction="left"
-        className={styles["no-margin"]}
+        className={styles.noMargin}
         text={
           <Header as="h3" color="grey">
             <Box>

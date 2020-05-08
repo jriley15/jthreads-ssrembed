@@ -1,5 +1,6 @@
 import React from "react";
 import { List, Button, Icon, Label, Header } from "semantic-ui-react";
+import { useSelector } from "react-redux";
 
 export default function Stats({ thread }) {
   const handleThreadLike = () => {};
