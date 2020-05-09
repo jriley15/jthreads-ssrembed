@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Comment } from "semantic-ui-react";
+import CommentBody from "./CommentBody";
 
 export default function CommentReply({ reply, index }) {
   useEffect(() => {}, [reply]);
@@ -10,10 +11,10 @@ export default function CommentReply({ reply, index }) {
       style={{
         marginTop: "1rem",
         marginBottom: "1rem",
-        backgroundColor:
-          reply.commentId === newComment
-            ? "rgba( 250, 223, 173, 0.2)"
-            : "inherit",
+        // backgroundColor:
+        //   reply.commentId === newComment
+        //     ? "rgba( 250, 223, 173, 0.2)"
+        //     : "inherit",
       }}
     >
       <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/jenny.jpg" />{" "}

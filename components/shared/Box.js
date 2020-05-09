@@ -5,7 +5,8 @@ export default function Box({
   alignItems,
   direction,
   children,
-  marginTop,
+  mt,
+  mb,
 }) {
   return (
     <div
@@ -14,7 +15,8 @@ export default function Box({
         alignItems: alignItems,
         flexDirection: direction,
         display: "flex",
-        marginTop: `${marginTop}rem`,
+        marginTop: `${mt}rem`,
+        marginBottom: `${mb}rem`,
       }}
     >
       {children}

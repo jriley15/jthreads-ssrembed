@@ -25,5 +25,38 @@ export default function useComments() {
     [comments]
   );
 
-  return { comments, setComments, toggleShowReplies };
+  const toggleRepliesLoading = useCallback(
+    (commentIndex, value) => {
+      let commentsCopy = [...comments];
+      commentsCopy[commentIndex] = {
+        ...commentsCopy[commentIndex],
+        repliesLoading: value,
+      };
+      dispatch(setComments(commentsCopy));
+    },
+    [comments]
+  );
+
+  const setReplies = useCallback(
+    (commentIndex, replies) => {
+      let commentsCopy = [...comments];
+      commentsCopy[commentIndex] = {
+        ...commentsCopy[commentIndex],
+        repliesLoading: false,
+        replies: commentsCopy[commentIndex].replies
+          ? [...commentsCopy[commentIndex].replies, ...replies]
+          : replies,
+      };
+      dispatch(setComments(commentsCopy));
+    },
+    [comments]
+  );
+
+  return {
+    comments,
+    setComments,
+    toggleShowReplies,
+    toggleRepliesLoading,
+    setReplies,
+  };
 }

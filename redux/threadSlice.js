@@ -5,6 +5,7 @@ export const threadSlice = createSlice({
   initialState: {
     thread: {},
     comments: [],
+    cachedPages: [],
   },
   reducers: {
     setThread: (state, action) => {

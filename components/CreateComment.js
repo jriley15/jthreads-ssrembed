@@ -8,18 +8,17 @@ export default function CreateComment() {
   const { isAuthenticated } = useSelector(selectAuth);
   const [commentLoading, setCommentLoading] = useState(false);
   const [comment, setComment] = useState("");
-  const { data, error } = useSWR(
-    "https://jthreadsapi.jrdn.tech/User/Me",
-    (url) => fetch(url, { credentials: "include" })
-  );
   const [user, setUser] = useState();
+  // const fetcher = (url) =>
+  //   fetch(url, { credentials: "include" }).then((r) => r.json());
+  // const { data, error } = useSWR(
+  //   "https://jthreadsapi.jrdn.tech/User/Me",
+  //   fetcher
+  // );
 
-  useEffect(() => {
-    const getUser = async () => {
-      setUser((await data.json()).data);
-    };
-    if (data?.status === 200) getUser();
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) setUser(data);
+  // }, [data]);
 
   const handleCommentChange = () => {};
   const handleSendComment = () => {};
