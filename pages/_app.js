@@ -16,7 +16,9 @@ function MyApp({ Component, pageProps, store }) {
     store.dispatch(setThread(pageProps.thread?.data));
   }
   if (pageProps?.comments) {
-    store.dispatch(setComments(pageProps.comments?.data));
+    store.dispatch(
+      setComments({ comments: pageProps.comments?.data, pageIndex: 1 })
+    );
   }
 
   return (

@@ -5,17 +5,12 @@ import { Comment, Form, Button } from "semantic-ui-react";
 import useSWR from "swr";
 import CommentPlaceholder from "./CommentPlaceholder";
 import CommentReply from "./CommentReply";
+import { fetcher } from "../util/fetcher";
 
 export default function CommentReplies({ comment, commentIndex }) {
-  const { toggleRepliesLoading, comments, setReplies } = useComments();
+  const { toggleRepliesLoading, setReplies } = useComments();
   const { thread } = useThread();
   const [repliesPageIndex, setRepliesPageIndex] = useState(0);
-
-  const fetcher = (url) => {
-    return fetch(url, {
-      credentials: "include",
-    }).then((r) => r.json());
-  };
 
   const { data, error } = useSWR(
     `https://jthreadsapi.jrdn.tech/Comment/Search?threadId=${
@@ -32,30 +27,26 @@ export default function CommentReplies({ comment, commentIndex }) {
 
   useEffect(() => {
     if (comment.replies && repliesPageIndex === 0) return;
-    if (data) setReplies(commentIndex, data.data);
+    if (!data) {
+      toggleRepliesLoading(commentIndex, true);
+    } else {
+      setReplies(commentIndex, data);
+    }
   }, [data]);
 
-  useEffect(() => {
-    if (!comment.replies) {
-      toggleRepliesLoading(commentIndex, true);
-    }
-  }, []);
+  const getRemainingReplies = () => {
+    return comment.replyCount - (comment.replies?.length ?? 0);
+  };
 
   return (
     <Comment.Group size="large">
-      {comment.repliesLoading ? (
-        <CommentPlaceholder replyCount={comment.replyCount} />
-      ) : (
-        <>
-          {comment.replies?.map((reply, replyIndex) => (
-            <CommentReply
-              key={reply.commentId}
-              index={replyIndex}
-              reply={reply}
-            />
-          ))}
-        </>
+      {comment.replies?.map((reply, replyIndex) => (
+        <CommentReply key={reply.commentId} index={replyIndex} reply={reply} />
+      ))}
+      {comment.repliesLoading && (
+        <CommentPlaceholder replyCount={getRemainingReplies()} />
       )}
+
       {comment.replies?.length < comment.replyCount && (
         <Form.Field>
           <Button

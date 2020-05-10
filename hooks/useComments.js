@@ -1,10 +1,17 @@
 import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectThread, setComments } from "../redux/threadSlice";
+import {
+  selectThread,
+  setComments as setCommentsAction,
+} from "../redux/threadSlice";
 
 export default function useComments() {
-  const { comments } = useSelector(selectThread);
+  const { comments, cachedPages } = useSelector(selectThread);
   const dispatch = useDispatch();
+
+  const setComments = (comments, pageIndex) => {
+    dispatch(setCommentsAction({ comments: comments, pageIndex: pageIndex }));
+  };
 
   const toggleShowReplies = useCallback(
     (commentIndex) => {
@@ -20,7 +27,7 @@ export default function useComments() {
           showReplies: true,
         };
       }
-      dispatch(setComments(commentsCopy));
+      setComments(commentsCopy);
     },
     [comments]
   );
@@ -32,7 +39,7 @@ export default function useComments() {
         ...commentsCopy[commentIndex],
         repliesLoading: value,
       };
-      dispatch(setComments(commentsCopy));
+      setComments(commentsCopy);
     },
     [comments]
   );
@@ -47,13 +54,14 @@ export default function useComments() {
           ? [...commentsCopy[commentIndex].replies, ...replies]
           : replies,
       };
-      dispatch(setComments(commentsCopy));
+      setComments(commentsCopy);
     },
     [comments]
   );
 
   return {
     comments,
+    cachedPages,
     setComments,
     toggleShowReplies,
     toggleRepliesLoading,

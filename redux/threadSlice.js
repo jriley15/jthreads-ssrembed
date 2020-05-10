@@ -6,18 +6,26 @@ export const threadSlice = createSlice({
     thread: {},
     comments: [],
     cachedPages: [],
+    pageIndex: 1,
   },
   reducers: {
     setThread: (state, action) => {
       state.thread = action.payload;
     },
     setComments: (state, action) => {
-      state.comments = action.payload;
+      const { comments, pageIndex } = action.payload;
+      state.comments = comments;
+      if (pageIndex) {
+        state.cachedPages[pageIndex] = comments;
+      }
+    },
+    setPageIndex: (state, action) => {
+      state.pageIndex = action.payload;
     },
   },
 });
 
-export const { setThread, setComments } = threadSlice.actions;
+export const { setThread, setComments, setPageIndex } = threadSlice.actions;
 
 export const selectThread = (state) => state.thread;
 
