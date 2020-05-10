@@ -27,13 +27,13 @@ export default function Comment({ commentIndex, comment }) {
     >
       <SemanticComment.Avatar
         src={
-          comment.user.avatarUrl ||
+          comment.user?.avatarUrl ||
           "https://bestnycacupuncturist.com/wp-content/uploads/2016/11/anonymous-avatar-sm.jpg"
         }
       />
       <SemanticComment.Content>
         <SemanticComment.Author as="a">
-          {comment.user?.displayName}
+          {comment.user?.displayName || comment.guest?.name}
         </SemanticComment.Author>
         <span className={styles.dotSeperator}>·</span>
         <SemanticComment.Metadata>
