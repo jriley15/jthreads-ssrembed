@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { List, Dropdown, Header, Icon } from "semantic-ui-react";
+import useThread from "../hooks/useThread";
+import { SortType } from "../redux/threadSlice";
 
 export default function Filters() {
-  const [selectedSort, setSelectedSort] = useState(0);
-  const handleSortSelect = () => {};
+  const { sortType, setSortType, setPageIndex } = useThread();
+
+  const handleSortSelect = (sortType) => {
+    setSortType(sortType);
+    setPageIndex(1);
+  };
 
   return (
     <List divided horizontal>
@@ -40,18 +46,18 @@ export default function Filters() {
           <Dropdown.Menu>
             <Dropdown.Item
               text="Most Recent"
-              selected={selectedSort === 0}
-              onClick={handleSortSelect(0)}
+              selected={sortType === SortType.MostRecent}
+              onClick={() => handleSortSelect(SortType.MostRecent)}
             />
             <Dropdown.Item
               text="Highest rating"
-              onClick={handleSortSelect(1)}
-              selected={selectedSort === 1}
+              onClick={() => handleSortSelect(SortType.HighestRating)}
+              selected={sortType === SortType.HighestRating}
             />
             <Dropdown.Item
-              onClick={handleSortSelect(2)}
               text="Most Replies"
-              selected={selectedSort === 2}
+              onClick={() => handleSortSelect(SortType.MostReplies)}
+              selected={sortType === SortType.MostReplies}
             />
           </Dropdown.Menu>
         </Dropdown>

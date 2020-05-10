@@ -12,12 +12,12 @@ const CommentsPerPage = 10;
 
 export default function Comments() {
   const { comments, setComments, cachedPages } = useComments();
-  const { thread, pageIndex, setPageIndex } = useThread();
+  const { thread, pageIndex, setPageIndex, sortType } = useThread();
 
   const { data, error } = useSWR(
     `https://jthreadsapi.jrdn.tech/Comment/Search?threadId=${
       thread.threadId
-    }&pageIndex=${pageIndex - 1}`,
+    }&pageIndex=${pageIndex - 1}&sortType=${sortType}`,
     fetcher
   );
 

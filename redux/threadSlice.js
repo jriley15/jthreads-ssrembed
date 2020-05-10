@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export const SortType = {
+  MostRecent: 0,
+  HighestRating: 1,
+  MostReplies: 2,
+};
+
 export const threadSlice = createSlice({
   name: "thread",
   initialState: {
@@ -7,6 +13,7 @@ export const threadSlice = createSlice({
     comments: [],
     cachedPages: [],
     pageIndex: 1,
+    sortType: SortType.MostRecent,
   },
   reducers: {
     setThread: (state, action) => {
@@ -22,10 +29,18 @@ export const threadSlice = createSlice({
     setPageIndex: (state, action) => {
       state.pageIndex = action.payload;
     },
+    setSortType: (state, action) => {
+      state.sortType = action.payload;
+    },
   },
 });
 
-export const { setThread, setComments, setPageIndex } = threadSlice.actions;
+export const {
+  setThread,
+  setComments,
+  setPageIndex,
+  setSortType,
+} = threadSlice.actions;
 
 export const selectThread = (state) => state.thread;
 
