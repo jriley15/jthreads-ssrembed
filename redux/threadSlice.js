@@ -32,6 +32,9 @@ export const threadSlice = createSlice({
     setSortType: (state, action) => {
       state.sortType = action.payload;
     },
+    incrementLikes: (state) => {
+      state.thread = { ...state.thread, likes: ++state.thread.likes };
+    },
   },
 });
 
@@ -40,6 +43,7 @@ export const {
   setComments,
   setPageIndex,
   setSortType,
+  incrementLikes,
 } = threadSlice.actions;
 
 export const selectThread = (state) => state.thread;

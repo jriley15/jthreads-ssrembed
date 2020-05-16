@@ -10,10 +10,11 @@ import Filters from "./Filters";
 import CreateComment from "./CreateComment";
 import { selectThread } from "../redux/threadSlice";
 import Comments from "./Comments";
+import useThread from "../hooks/useThread";
 
 function Thread() {
   const { isAuthenticated } = useSelector(selectAuth);
-  const { thread } = useSelector(selectThread);
+  const { thread } = useThread();
 
   return (
     <div id="jthread-container">
@@ -21,7 +22,7 @@ function Thread() {
         <Heading thread={thread} />
         <Divider />
         <Box justify="space-between" alignItems="flex-start">
-          <Stats thread={thread} />
+          <Stats />
           <Filters />
         </Box>
         <Box mt={1}>
