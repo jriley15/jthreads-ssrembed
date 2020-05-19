@@ -45,28 +45,68 @@ export default function CreateComment() {
         />
       </Comment>
       <Form reply style={{ marginLeft: "1rem", width: "100%" }}>
-        <Form.TextArea
-          value={comment}
-          onChange={handleCommentChange}
-          placeholder={"Leave a comment"}
-          rows={2}
-          style={{ height: 70, resize: "none" }}
-        />
         <Grid padded>
-          <Grid.Column computer={12} tablet={12} mobile={16} stretched>
-            <Form.Input placeholder="Display Name" />
-          </Grid.Column>
-          <Grid.Column computer={4} tablet={4} mobile={16} stretched>
-            <Button
-              content="Post Comment"
-              loading={commentLoading}
-              labelPosition="left"
-              icon="edit"
-              primary
-              style={{ margin: 0 }}
-              onClick={handleSendComment}
-            />
-          </Grid.Column>
+          <Grid.Row>
+            <Grid.Column computer={12} tablet={12} mobile={16} stretched>
+              <Form.TextArea
+                value={comment}
+                onChange={handleCommentChange}
+                placeholder={"Leave a comment"}
+                rows={2}
+                style={{ height: 70, resize: "none" }}
+              />
+            </Grid.Column>
+            <Grid.Column computer={4} tablet={4} mobile={16} stretched>
+              <Segment basic textAlign="center">
+                <Header as="h5">
+                  Sign up <a>here</a>
+                </Header>
+                <Box justify="center" alignItems="center">
+                  <Header
+                    as="h5"
+                    color="grey"
+                    style={{ margin: 0, marginRight: "0.5rem" }}
+                  >
+                    Or
+                  </Header>
+                  <Button
+                    circular
+                    color="twitter"
+                    icon="twitter"
+                    size="small"
+                  />
+                  <Button circular icon size="small">
+                    <img
+                      style={{ width: "1.0em" }}
+                      src="https://cdn.aircomechanical.com/wp-content/uploads/2018/12/google-review-button.png"
+                    />
+                  </Button>
+                  <Button
+                    circular
+                    color="facebook"
+                    icon="facebook"
+                    size="small"
+                  />
+                </Box>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column computer={12} tablet={12} mobile={16} stretched>
+              <Form.Input placeholder="Display Name" />
+            </Grid.Column>
+            <Grid.Column computer={4} tablet={4} mobile={16} stretched>
+              <Button
+                content="Post Comment"
+                loading={commentLoading}
+                labelPosition="left"
+                icon="edit"
+                primary
+                style={{ margin: 0 }}
+                onClick={handleSendComment}
+              />
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
 
         {/* <Segment basic textAlign="center">
