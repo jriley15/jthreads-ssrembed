@@ -7,6 +7,7 @@ export default function Box({
   children,
   mt,
   mb,
+  position,
 }) {
   return (
     <div
@@ -17,6 +18,7 @@ export default function Box({
         display: "flex",
         marginTop: `${mt}rem`,
         marginBottom: `${mb}rem`,
+        position: position ?? "static",
       }}
     >
       {children}

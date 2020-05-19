@@ -7,17 +7,18 @@ import Box from "./shared/Box";
 import Heading from "./Heading";
 import Stats from "./Stats";
 import Filters from "./Filters";
-import CreateComment from "./CreateComment";
+import CreateComment from "./comments/CreateComment";
 import { selectThread } from "../redux/threadSlice";
-import Comments from "./Comments";
+import Comments from "./comments/Comments";
 import useThread from "../hooks/useThread";
+import { Container } from "next/app";
 
 function Thread() {
   const { isAuthenticated } = useSelector(selectAuth);
   const { thread } = useThread();
 
   return (
-    <div id="jthread-container">
+    <Container id="jthread-container">
       <SemanticComment.Group className={styles.mainCommentGroup} size="large">
         <Heading thread={thread} />
         <Divider />
@@ -30,7 +31,7 @@ function Thread() {
         </Box>
         <Comments />
       </SemanticComment.Group>
-    </div>
+    </Container>
   );
 }
 

@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import styles from "../public/styles/Comment.module.scss";
+import styles from "../../public/styles/Comment.module.scss";
 import {
   Icon,
   Comment as SemanticComment,
   Placeholder,
 } from "semantic-ui-react";
-import useComments from "../hooks/useComments";
-import { getDateString } from "../util/dateHelper";
+import useComments from "../../hooks/useComments";
+import { getDateString } from "../../util/dateHelper";
 import CommentBody from "./CommentBody";
-import { selectThread, setComments } from "../redux/threadSlice";
+import { selectThread, setComments } from "../../redux/threadSlice";
 import CommentPlaceholder from "./CommentPlaceholder";
 import CommentReplies from "./CommentReplies";
 
@@ -28,7 +28,9 @@ export default function Comment({ commentIndex, comment }) {
       <SemanticComment.Avatar
         src={
           comment.user?.avatarUrl ||
-          "https://bestnycacupuncturist.com/wp-content/uploads/2016/11/anonymous-avatar-sm.jpg"
+          `https://avatars.dicebear.com/v2/jdenticon/${
+            comment.user?.userId || comment.guest?.guestId
+          }.svg`
         }
       />
       <SemanticComment.Content>

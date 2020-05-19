@@ -2,8 +2,34 @@ html,
 body {
   padding: 0;
   margin: 0;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: transparent;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.reply.form {
+  .field {
+    margin: 0 0 0.5rem;
+  }
+}
+
+.grid {
+  .column:first-child {
+    padding: 0.25rem 0 !important;
+    @media only screen and (min-width: 768px) {
+      padding: 0 0.25rem 0 0 !important;
+    }
+  }
+  .column:last-child {
+    padding: 0.25rem 0 !important;
+
+    @media only screen and (min-width: 768px) {
+      padding: 0 0 0 0.25rem !important;
+    }
+  }
 }

@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { List, Dropdown, Header, Icon } from "semantic-ui-react";
 import useThread from "../hooks/useThread";
 import { SortType } from "../redux/threadSlice";
+import useComments from "../hooks/useComments";
 
 export default function Filters() {
   const { sortType, setSortType, setPageIndex } = useThread();
+  const { setComments } = useComments();
 
   const handleSortSelect = (sortType) => {
     setSortType(sortType);
+    setComments(null, 1);
     setPageIndex(1);
   };
 

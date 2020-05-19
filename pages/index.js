@@ -50,9 +50,7 @@ export async function getServerSideProps(context) {
   let [threadResponse, commentsResponse] = await Promise.all([
     threadFetch,
     commentsFetch,
-  ]).then(
-    async (responses) => await Promise.all([...responses.map((r) => r.json())])
-  );
+  ]).then((responses) => Promise.all(responses.map((r) => r.json())));
 
   // Pass data to the page via props
   return {

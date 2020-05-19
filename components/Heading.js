@@ -24,7 +24,7 @@ export default function Heading({ thread }) {
           <Header as="h3" color="grey">
             <Box>
               <Icon name="lock" style={{ marginRight: 6, fontSize: 18 }} />
-              <span>Sign in</span>
+              <span>Sign in with</span>
             </Box>
           </Header>
         }

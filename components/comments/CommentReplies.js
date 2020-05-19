@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import useComments from "../hooks/useComments";
-import useThread from "../hooks/useThread";
+import React, { useEffect, useState, useMemo } from "react";
+import useComments from "../../hooks/useComments";
+import useThread from "../../hooks/useThread";
 import { Comment, Form, Button } from "semantic-ui-react";
 import useSWR from "swr";
 import CommentPlaceholder from "./CommentPlaceholder";
 import CommentReply from "./CommentReply";
-import { fetcher } from "../util/fetcher";
+import { fetcher } from "../../util/fetcher";
 
 export default function CommentReplies({ comment, commentIndex }) {
   const { toggleRepliesLoading, setReplies } = useComments();
@@ -34,9 +34,9 @@ export default function CommentReplies({ comment, commentIndex }) {
     }
   }, [data]);
 
-  const getRemainingReplies = () => {
+  const remainingReplies = useMemo(() => {
     return comment.replyCount - (comment.replies?.length ?? 0);
-  };
+  }, [comment]);
 
   return (
     <Comment.Group size="large">
@@ -44,7 +44,13 @@ export default function CommentReplies({ comment, commentIndex }) {
         <CommentReply key={reply.commentId} index={replyIndex} reply={reply} />
       ))}
       {comment.repliesLoading && (
-        <CommentPlaceholder replyCount={getRemainingReplies()} />
+        <>
+          {new Array(remainingReplies < 5 ? remainingReplies : 5)
+            .fill(0)
+            .map((elem, index) => (
+              <CommentPlaceholder key={"cr-" + index} />
+            ))}
+        </>
       )}
 
       {comment.replies?.length < comment.replyCount && (
