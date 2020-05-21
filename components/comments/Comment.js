@@ -15,6 +15,14 @@ import CommentReplies from "./CommentReplies";
 export default function Comment({ commentIndex, comment }) {
   const { toggleShowReplies } = useComments();
 
+  const handleLikeComment = () => {
+    console.log("like");
+  };
+
+  const handleDislikeComment = () => {
+    console.log("dislike");
+  };
+
   return (
     <SemanticComment
       className={styles.comment}
@@ -49,18 +57,18 @@ export default function Comment({ commentIndex, comment }) {
             Reply
           </SemanticComment.Action>
           <SemanticComment.Action>|</SemanticComment.Action>
-          <SemanticComment.Action>
+          <SemanticComment.Action onClick={handleLikeComment}>
             <span className={`${styles.action} ${styles.likes}`}>
               {comment.likes}
             </span>
-            <Icon name="thumbs up" onClick={() => {}} />
+            <Icon name="thumbs up" />
           </SemanticComment.Action>
-          <SemanticComment.Action>
+          <SemanticComment.Action onClick={handleDislikeComment}>
             <span className={`${styles.action} ${styles.dislikes}`}>
               {comment.dislikes}
             </span>
 
-            <Icon name="thumbs down" onClick={() => {}} />
+            <Icon name="thumbs down" />
           </SemanticComment.Action>
           {comment.replyCount > 0 && (
             <>

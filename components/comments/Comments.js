@@ -16,12 +16,21 @@ export default function Comments() {
   const { thread, pageIndex, setPageIndex, sortType } = useThread();
   const [loading, setLoading] = useState(false);
 
-  const { data, error } = useSWR(
+  const {
+    data,
+    error,
+    revalidate,
+  } = useSWR(
     `https://jthreadsapi.jrdn.tech/Comment/Search?threadId=${
       thread.threadId
-    }&pageIndex=${pageIndex - 1}&sortType=${sortType}&r=${refreshCounter}`,
-    fetcher
+    }&pageIndex=${pageIndex - 1}&sortType=${sortType}`,
+    fetcher,
+    { refreshInterval: 30000 }
   );
+
+  useEffect(() => {
+    revalidate();
+  }, [refreshCounter]);
 
   const handlePageChange = (e, { activePage }) => {
     setPageIndex(activePage);
@@ -30,22 +39,23 @@ export default function Comments() {
   useEffect(() => {
     if (cachedPages[pageIndex]) {
       setComments(cachedPages[pageIndex]);
+      setLoading(false);
     } else {
       setComments([]);
-      setLoading(true);
     }
   }, [pageIndex]);
 
   useEffect(() => {
     if (data) {
       setComments(data, pageIndex);
-      setLoading(false);
     }
   }, [data]);
 
   useEffect(() => {
     if (comments?.length === 0) {
       setLoading(true);
+    } else {
+      setLoading(false);
     }
   }, [comments]);
 

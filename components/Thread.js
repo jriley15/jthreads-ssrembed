@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { Divider, Comment as SemanticComment } from "semantic-ui-react";
+import {
+  Divider,
+  Comment as SemanticComment,
+  List,
+  Header,
+} from "semantic-ui-react";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../redux/authSlice";
 import styles from "../public/styles/Thread.module.scss";
@@ -31,6 +36,21 @@ function Thread() {
         </Box>
         <Comments />
       </SemanticComment.Group>
+      <Divider />
+
+      <List horizontal divided>
+        <List.Item>
+          <Header as="h4">
+            Powered by{" "}
+            <a href="https://jthreads.jrdn.tech" target="_blank">
+              JThreads
+            </a>
+          </Header>
+        </List.Item>
+        <List.Item>
+          <Header as="h6">v1.0</Header>
+        </List.Item>
+      </List>
     </Container>
   );
 }
