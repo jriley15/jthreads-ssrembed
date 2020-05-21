@@ -4,7 +4,6 @@ import store from "../redux/store";
 import withRedux from "next-redux-wrapper";
 import { authenticate } from "../redux/authSlice";
 import { setThread, setComments } from "../redux/threadSlice";
-import { useEffect } from "react";
 
 // This default export is required in a new `pages/_app.js` file.
 function MyApp({ Component, pageProps, store }) {

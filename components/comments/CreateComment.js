@@ -16,14 +16,18 @@ import Box from "../shared/Box";
 import styles from "../../public/styles/Headers.module.scss";
 import { post } from "../../util/fetcher";
 import useThread from "../../hooks/useThread";
+import useComments from "../../hooks/useComments";
+import { SortType } from "../../redux/threadSlice";
 
 export default function CreateComment() {
   const { isAuthenticated, claims } = useSelector(selectAuth);
-  const [commentLoading, setCommentLoading] = useState(false);
+  const { setSortType, setPageIndex } = useThread();
+  const { refresh } = useComments();
   const [comment, setComment] = useState("");
   const [displayName, setDisplayName] = useState("");
   const { thread } = useThread();
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   // const fetcher = (url) =>
   //   fetch(url, { credentials: "include" }).then((r) => r.json());
@@ -37,6 +41,10 @@ export default function CreateComment() {
   // }, [data]);
 
   const handleSendComment = async () => {
+    if (hasErrors()) {
+      return;
+    }
+    setErrors({});
     setLoading(true);
     let response = await post("https://jthreadsapi.jrdn.tech/Comment/Create", {
       threadId: thread.threadId,
@@ -47,7 +55,26 @@ export default function CreateComment() {
     setLoading(false);
     if (response.success) {
       setComment("");
+      setSortType(SortType.MostRecent);
+      setPageIndex(1);
+      refresh();
     }
+  };
+
+  const hasErrors = () => {
+    let errorsCopy = { ...errors };
+    if (!comment) {
+      errorsCopy = { ...errorsCopy, comment: "Required" };
+    } else {
+      delete errorsCopy.comment;
+    }
+    if (!displayName) {
+      errorsCopy = { ...errorsCopy, displayName: "Required" };
+    } else {
+      delete errorsCopy.displayName;
+    }
+    setErrors(errorsCopy);
+    return Object.keys(errorsCopy)?.length > 0;
   };
 
   return (
@@ -70,6 +97,7 @@ export default function CreateComment() {
           rows={2}
           style={{ height: 70, resize: "none" }}
           disabled={loading}
+          error={errors.comment}
         />
         <Grid padded>
           <Grid.Column computer={12} tablet={12} mobile={16} stretched>
@@ -79,12 +107,12 @@ export default function CreateComment() {
                 setDisplayName(e.target.value);
               }}
               disabled={loading}
+              error={errors.displayName}
             />
           </Grid.Column>
-          <Grid.Column computer={4} tablet={4} mobile={16} stretched>
+          <Grid.Column computer={4} tablet={4} mobile={16}>
             <Button
               content="Post As Guest"
-              loading={commentLoading}
               labelPosition="left"
               icon="edit"
               primary
@@ -92,6 +120,7 @@ export default function CreateComment() {
               onClick={handleSendComment}
               disabled={loading}
               loading={loading}
+              fluid
             />
           </Grid.Column>
         </Grid>

@@ -12,14 +12,14 @@ import CommentPlaceholder from "./CommentPlaceholder";
 const CommentsPerPage = 10;
 
 export default function Comments() {
-  const { comments, setComments, cachedPages } = useComments();
+  const { comments, setComments, cachedPages, refreshCounter } = useComments();
   const { thread, pageIndex, setPageIndex, sortType } = useThread();
   const [loading, setLoading] = useState(false);
 
   const { data, error } = useSWR(
     `https://jthreadsapi.jrdn.tech/Comment/Search?threadId=${
       thread.threadId
-    }&pageIndex=${pageIndex - 1}&sortType=${sortType}`,
+    }&pageIndex=${pageIndex - 1}&sortType=${sortType}&r=${refreshCounter}`,
     fetcher
   );
 

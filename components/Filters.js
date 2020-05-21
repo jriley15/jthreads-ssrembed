@@ -6,7 +6,7 @@ import useComments from "../hooks/useComments";
 
 export default function Filters() {
   const { sortType, setSortType, setPageIndex, pageIndex } = useThread();
-  const { setComments, clearCache } = useComments();
+  const { clearCache } = useComments();
 
   const handleSortSelect = (type) => {
     if (type !== sortType || pageIndex > 1) {
