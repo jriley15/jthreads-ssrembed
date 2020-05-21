@@ -50,7 +50,7 @@ export default function CreateComment() {
       threadId: thread.threadId,
       namespaceId: thread.namespace.namespaceId,
       body: comment,
-      name: isAuthenticated ? undefined : displayName,
+      name: displayName,
     });
     setLoading(false);
     if (response.success) {

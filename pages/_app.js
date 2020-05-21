@@ -1,12 +1,12 @@
 import "../public/styles/index.scss";
 import { Provider } from "react-redux";
 import store from "../redux/store";
-import withRedux from "next-redux-wrapper";
+import { createWrapper } from "next-redux-wrapper";
 import { authenticate } from "../redux/authSlice";
 import { setThread, setComments } from "../redux/threadSlice";
 
 // This default export is required in a new `pages/_app.js` file.
-function MyApp({ Component, pageProps, store }) {
+function MyApp({ Component, pageProps }) {
   // Initialize auth state
   if (pageProps?.claims) {
     store.dispatch(authenticate(pageProps.claims));
@@ -27,6 +27,8 @@ function MyApp({ Component, pageProps, store }) {
   );
 }
 
-const makeStore = () => store;
+const makeStore = (context) => store;
 
-export default withRedux(makeStore)(MyApp);
+const wrapper = createWrapper(makeStore);
+
+export default wrapper.withRedux(MyApp);
