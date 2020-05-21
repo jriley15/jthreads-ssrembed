@@ -5,13 +5,15 @@ import { SortType } from "../redux/threadSlice";
 import useComments from "../hooks/useComments";
 
 export default function Filters() {
-  const { sortType, setSortType, setPageIndex } = useThread();
-  const { setComments } = useComments();
+  const { sortType, setSortType, setPageIndex, pageIndex } = useThread();
+  const { setComments, clearCache } = useComments();
 
-  const handleSortSelect = (sortType) => {
-    setSortType(sortType);
-    setComments(null, 1);
-    setPageIndex(1);
+  const handleSortSelect = (type) => {
+    if (type !== sortType || pageIndex > 1) {
+      clearCache();
+      setSortType(type);
+      setPageIndex(1);
+    }
   };
 
   return (

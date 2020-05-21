@@ -3,11 +3,16 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   selectThread,
   setComments as setCommentsAction,
+  clearCache as clearCacheAction,
 } from "../redux/threadSlice";
 
 export default function useComments() {
   const { comments, cachedPages } = useSelector(selectThread);
   const dispatch = useDispatch();
+
+  const clearCache = () => {
+    dispatch(clearCacheAction());
+  };
 
   const setComments = (comments, pageIndex) => {
     dispatch(setCommentsAction({ comments: comments, pageIndex: pageIndex }));
@@ -62,6 +67,7 @@ export default function useComments() {
   return {
     comments,
     cachedPages,
+    clearCache,
     setComments,
     toggleShowReplies,
     toggleRepliesLoading,

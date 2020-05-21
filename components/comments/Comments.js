@@ -43,6 +43,12 @@ export default function Comments() {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (comments?.length === 0) {
+      setLoading(true);
+    }
+  }, [comments]);
+
   const remainingComments = useMemo(() => {
     if (thread.totalComments < CommentsPerPage) return thread.totalComments;
 

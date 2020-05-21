@@ -16,6 +16,10 @@ export const threadSlice = createSlice({
     sortType: SortType.MostRecent,
   },
   reducers: {
+    clearCache: (state, action) => {
+      state.comments = [];
+      state.cachedPages = [];
+    },
     setThread: (state, action) => {
       state.thread = action.payload;
     },
@@ -44,6 +48,7 @@ export const {
   setPageIndex,
   setSortType,
   incrementLikes,
+  clearCache,
 } = threadSlice.actions;
 
 export const selectThread = (state) => state.thread;
