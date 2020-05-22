@@ -1,26 +1,60 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../public/styles/Comment.module.scss";
 import {
   Icon,
   Comment as SemanticComment,
   Placeholder,
+  Loader,
+  Form,
+  Button,
 } from "semantic-ui-react";
 import useComments from "../../hooks/useComments";
 import { getDateString } from "../../util/dateHelper";
 import CommentBody from "./CommentBody";
-import { selectThread, setComments } from "../../redux/threadSlice";
-import CommentPlaceholder from "./CommentPlaceholder";
 import CommentReplies from "./CommentReplies";
+import { post } from "../../util/fetcher";
 
 export default function Comment({ commentIndex, comment }) {
-  const { toggleShowReplies } = useComments();
+  const {
+    toggleShowReplies,
+    incrementLikes,
+    incrementDislikes,
+  } = useComments();
+  const [likedComment, setLikedComment] = useState(false);
+  const [dislikedComment, setDislikedComment] = useState(false);
+  const [likeLoading, setLikeLoading] = useState(false);
+  const [dislikeLoading, setDislikeLoading] = useState(false);
+  const [replying, setReplying] = useState(false);
+  const [showReplies, setShowReplies] = useState(false);
 
-  const handleLikeComment = () => {
-    console.log("like");
+  const handleLikeComment = async () => {
+    if (!likedComment) {
+      setLikeLoading(true);
+      let response = await post("https://jthreadsapi.jrdn.tech/Comment/Rate", {
+        type: 1,
+        commentId: comment.commentId,
+      });
+      if (response.success) {
+        incrementLikes(commentIndex);
+        setLikedComment(true);
+      }
+      setLikeLoading(false);
+    }
   };
 
-  const handleDislikeComment = () => {
-    console.log("dislike");
+  const handleDislikeComment = async () => {
+    if (!dislikedComment) {
+      setDislikeLoading(true);
+      let response = await post("https://jthreadsapi.jrdn.tech/Comment/Rate", {
+        type: 0,
+        commentId: comment.commentId,
+      });
+      if (response.success) {
+        incrementDislikes(commentIndex);
+        setDislikedComment(true);
+      }
+      setDislikeLoading(false);
+    }
   };
 
   return (
@@ -52,8 +86,12 @@ export default function Comment({ commentIndex, comment }) {
         <SemanticComment.Text>
           <CommentBody body={comment.body} />
         </SemanticComment.Text>
-        <SemanticComment.Actions onClick={() => {}}>
-          <SemanticComment.Action onClick={() => {}}>
+        <SemanticComment.Actions>
+          <SemanticComment.Action
+            onClick={() => {
+              setReplying(!replying);
+            }}
+          >
             Reply
           </SemanticComment.Action>
           <SemanticComment.Action>|</SemanticComment.Action>
@@ -61,32 +99,59 @@ export default function Comment({ commentIndex, comment }) {
             <span className={`${styles.action} ${styles.likes}`}>
               {comment.likes}
             </span>
-            <Icon name="thumbs up" />
+            {likeLoading ? (
+              <Loader active inline size="mini" />
+            ) : (
+              <Icon name="thumbs up" />
+            )}
           </SemanticComment.Action>
           <SemanticComment.Action onClick={handleDislikeComment}>
             <span className={`${styles.action} ${styles.dislikes}`}>
               {comment.dislikes}
             </span>
-
-            <Icon name="thumbs down" />
+            {dislikeLoading ? (
+              <Loader active inline size="mini" />
+            ) : (
+              <Icon name="thumbs down" />
+            )}
           </SemanticComment.Action>
           {comment.replyCount > 0 && (
             <>
               <SemanticComment.Action>|</SemanticComment.Action>
               <SemanticComment.Action
                 onClick={() => {
-                  toggleShowReplies(commentIndex);
+                  setShowReplies(!showReplies);
                 }}
               >
-                <Icon name={comment.showReplies ? "caret up" : "caret down"} />
+                <Icon name={showReplies ? "caret up" : "caret down"} />
                 {comment.replyCount +
                   (comment.replyCount > 1 ? " replies" : " reply")}
               </SemanticComment.Action>
             </>
           )}
+          {replying && (
+            <Form style={{ paddingTop: "1rem" }}>
+              <Form.Field width={12}>
+                <Form.TextArea
+                  value={""}
+                  onChange={(e) => {}}
+                  placeholder={"Leave a reply"}
+                  rows={2}
+                  style={{ height: 60, resize: "none" }}
+                  disabled={false}
+                  error={false}
+                />
+              </Form.Field>
+              <Form.Field onClick={() => {}}>
+                <Button size="small" loading={false} disabled={false}>
+                  Send
+                </Button>
+              </Form.Field>
+            </Form>
+          )}
         </SemanticComment.Actions>
       </SemanticComment.Content>
-      {comment.showReplies && (
+      {showReplies && (
         <CommentReplies comment={comment} commentIndex={commentIndex} />
       )}
     </SemanticComment>

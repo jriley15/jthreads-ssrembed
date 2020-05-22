@@ -8,9 +8,10 @@ import CommentReply from "./CommentReply";
 import { fetcher } from "../../util/fetcher";
 
 export default function CommentReplies({ comment, commentIndex }) {
-  const { toggleRepliesLoading, setReplies } = useComments();
+  const { setReplies } = useComments();
   const { thread } = useThread();
   const [repliesPageIndex, setRepliesPageIndex] = useState(0);
+  const [repliesLoading, setRepliesLoading] = useState(false);
 
   const { data, error } = useSWR(
     `https://jthreadsapi.jrdn.tech/Comment/Search?threadId=${
@@ -28,9 +29,10 @@ export default function CommentReplies({ comment, commentIndex }) {
   useEffect(() => {
     if (comment.replies && repliesPageIndex === 0) return;
     if (!data) {
-      toggleRepliesLoading(commentIndex, true);
+      setRepliesLoading(true);
     } else {
       setReplies(commentIndex, data);
+      setRepliesLoading(false);
     }
   }, [data]);
 
@@ -43,7 +45,7 @@ export default function CommentReplies({ comment, commentIndex }) {
       {comment.replies?.map((reply, replyIndex) => (
         <CommentReply key={reply.commentId} index={replyIndex} reply={reply} />
       ))}
-      {comment.repliesLoading && (
+      {repliesLoading && (
         <>
           {new Array(remainingReplies < 5 ? remainingReplies : 5)
             .fill(0)
@@ -57,7 +59,7 @@ export default function CommentReplies({ comment, commentIndex }) {
         <Form.Field>
           <Button
             size="small"
-            loading={comment.repliesLoading}
+            loading={repliesLoading}
             onClick={handleLoadMoreReplies}
           >
             Load more

@@ -68,7 +68,7 @@ export default function CreateComment() {
     } else {
       delete errorsCopy.comment;
     }
-    if (!displayName) {
+    if (!displayName && !isAuthenticated) {
       errorsCopy = { ...errorsCopy, displayName: "Required" };
     } else {
       delete errorsCopy.displayName;
@@ -101,18 +101,20 @@ export default function CreateComment() {
         />
         <Grid padded>
           <Grid.Column computer={12} tablet={12} mobile={16} stretched>
-            <Form.Input
-              placeholder="Display Name"
-              onChange={(e) => {
-                setDisplayName(e.target.value);
-              }}
-              disabled={loading}
-              error={errors.displayName}
-            />
+            {!isAuthenticated && (
+              <Form.Input
+                placeholder="Display Name"
+                onChange={(e) => {
+                  setDisplayName(e.target.value);
+                }}
+                disabled={loading}
+                error={errors.displayName}
+              />
+            )}
           </Grid.Column>
           <Grid.Column computer={4} tablet={4} mobile={16}>
             <Button
-              content="Post As Guest"
+              content={isAuthenticated ? "Post" : "Post As Guest"}
               labelPosition="left"
               icon="edit"
               primary
@@ -125,24 +127,26 @@ export default function CreateComment() {
           </Grid.Column>
         </Grid>
 
-        <Segment basic textAlign="center">
-          <Header as="h5" className={styles.smallMargin}>
-            Sign up <a>here</a>
-          </Header>
-          <Header as="h5" color="grey" className={styles.smallMargin}>
-            Or sign in with
-          </Header>
-          <Box justify="center" alignItems="center">
-            <Button circular color="twitter" icon="twitter" />
-            <Button circular icon>
-              <img
-                style={{ width: "1.0em" }}
-                src="https://cdn.aircomechanical.com/wp-content/uploads/2018/12/google-review-button.png"
-              />
-            </Button>
-            <Button circular color="facebook" icon="facebook" />
-          </Box>
-        </Segment>
+        {!isAuthenticated && (
+          <Segment basic textAlign="center">
+            <Header as="h5" className={styles.smallMargin}>
+              Sign up <a>here</a>
+            </Header>
+            <Header as="h5" color="grey" className={styles.smallMargin}>
+              Or sign in with
+            </Header>
+            <Box justify="center" alignItems="center">
+              <Button circular color="twitter" icon="twitter" />
+              <Button circular icon>
+                <img
+                  style={{ width: "1.0em" }}
+                  src="https://cdn.aircomechanical.com/wp-content/uploads/2018/12/google-review-button.png"
+                />
+              </Button>
+              <Button circular color="facebook" icon="facebook" />
+            </Box>
+          </Segment>
+        )}
       </Form>
     </>
   );
