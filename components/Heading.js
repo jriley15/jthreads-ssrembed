@@ -7,7 +7,13 @@ import { selectThread } from "../redux/threadSlice";
 import useAuth from "../hooks/useAuth";
 
 export default function Heading({ thread }) {
-  const { isAuthenticated, openJThreadsSignin, logout, claims } = useAuth();
+  const {
+    isAuthenticated,
+    openJThreadsSignin,
+    logout,
+    claims,
+    openGoogleSignin,
+  } = useAuth();
 
   return (
     <Box justify="space-between" alignItems="center">
@@ -61,6 +67,9 @@ export default function Heading({ thread }) {
                   Google
                 </span>
               }
+              onClick={() => {
+                openGoogleSignin();
+              }}
             />
             <Dropdown.Item text="Facebook" icon="facebook blue" disabled />
             <Dropdown.Item text="Twitter" icon="twitter blue" disabled />

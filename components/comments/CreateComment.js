@@ -31,6 +31,7 @@ export default function CreateComment() {
   const {
     displayName: reduxDisplayName,
     setDisplayName: setReduxDisplayName,
+    openGoogleSignin,
   } = useAuth();
   const [displayName, setDisplayName] = useState(reduxDisplayName);
 
@@ -139,7 +140,14 @@ export default function CreateComment() {
               Or sign in with
             </Header>
             <Box justify="center" alignItems="center">
-              <Button circular icon className={styles.loginButton}>
+              <Button
+                circular
+                icon
+                className={styles.loginButton}
+                onClick={() => {
+                  openGoogleSignin();
+                }}
+              >
                 <img
                   style={{ width: "1.0em" }}
                   src="https://cdn.aircomechanical.com/wp-content/uploads/2018/12/google-review-button.png"

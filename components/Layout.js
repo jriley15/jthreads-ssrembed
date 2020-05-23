@@ -24,11 +24,19 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     const handleMessage = async ({ data, origin }) => {
-      if (origin === process.env.NEXT_PUBLIC_LANDING_URL) {
+      if (
+        origin === process.env.NEXT_PUBLIC_LANDING_URL ||
+        origin === window.location.origin
+      ) {
         if (data === "success") {
           // get Me
-          console.log("logged in");
           authenticate();
+        } else if (data?.google) {
+          if (data?.success) {
+            authenticate();
+          } else {
+            console.log("error: ", data.errors);
+          }
         }
       }
     };
