@@ -23,7 +23,11 @@ export default function Comment({ commentIndex, comment }) {
   const [dislikeLoading, setDislikeLoading] = useState(false);
   const [replying, setReplying] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
-  const [replies, setReplies] = useState();
+  const [refreshCounter, setRefreshCounter] = useState([0]);
+
+  const refreshReplies = () => {
+    setRefreshCounter(refreshCounter + 1);
+  };
 
   const stopReplying = () => {
     setReplying(false);
@@ -139,17 +143,20 @@ export default function Comment({ commentIndex, comment }) {
             </>
           )}
           {replying && (
-            <CreateReply comment={comment} stopReplying={stopReplying} />
+            <CreateReply
+              comment={comment}
+              stopReplying={stopReplying}
+              setShowReplies={setShowReplies}
+              refreshReplies={refreshReplies}
+            />
           )}
         </SemanticComment.Actions>
       </SemanticComment.Content>
-      {showReplies && (
-        <CommentReplies
-          comment={comment}
-          replies={replies}
-          setReplies={setReplies}
-        />
-      )}
+      <CommentReplies
+        comment={comment}
+        showReplies={showReplies}
+        refreshCounter={refreshCounter}
+      />
     </SemanticComment>
   );
 }

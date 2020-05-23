@@ -119,7 +119,7 @@ export default function CreateComment() {
                 onChange={(e) => {
                   setDisplayName(e.target.value);
                 }}
-                disabled={loading || reduxDisplayName}
+                disabled={!!(loading || reduxDisplayName)}
                 error={errors.displayName}
                 value={reduxDisplayName || displayName}
               />

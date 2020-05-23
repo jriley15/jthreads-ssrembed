@@ -3,8 +3,14 @@ import { Form, Button } from "semantic-ui-react";
 import { post } from "../../util/fetcher";
 import useThread from "../../hooks/useThread";
 import useAuth from "../../hooks/useAuth";
+import useComments from "../../hooks/useComments";
 
-export default function CreateReply({ comment, stopReplying }) {
+export default function CreateReply({
+  comment,
+  stopReplying,
+  refreshReplies,
+  setShowReplies,
+}) {
   const [reply, setReply] = useState();
   const { thread } = useThread();
   const { isAuthenticated } = useAuth();
@@ -15,6 +21,7 @@ export default function CreateReply({ comment, stopReplying }) {
   } = useAuth();
   const [displayName, setDisplayName] = useState(reduxDisplayName);
   const [errors, setErrors] = useState({});
+  const { refresh } = useComments();
 
   const handleSendReply = async () => {
     if (hasErrors()) {
@@ -35,17 +42,20 @@ export default function CreateReply({ comment, stopReplying }) {
     if (response.success) {
       setReply("");
       stopReplying();
+      setShowReplies(true);
+      refreshReplies();
+      refresh();
     }
   };
 
   const hasErrors = () => {
     let errorsCopy = { ...errors };
-    if (!comment) {
-      errorsCopy = { ...errorsCopy, comment: "Required" };
+    if (!reply) {
+      errorsCopy = { ...errorsCopy, reply: "Required" };
     } else {
-      delete errorsCopy.comment;
+      delete errorsCopy.reply;
     }
-    if (!displayName && !isAuthenticated) {
+    if (!displayName && !isAuthenticated && !reduxDisplayName) {
       errorsCopy = { ...errorsCopy, displayName: "Required" };
     } else {
       delete errorsCopy.displayName;
@@ -65,19 +75,21 @@ export default function CreateReply({ comment, stopReplying }) {
             rows={2}
             style={{ height: 60, resize: "none" }}
             disabled={loading}
-            error={false}
+            error={errors.reply}
             onChange={(e) => setReply(e.target.value)}
           />
         </Form.Field>
         <Form.Group>
-          <Form.Input
-            value={reduxDisplayName || displayName}
-            placeholder={"Display Name"}
-            disabled={reduxDisplayName || loading}
-            error={false}
-            onChange={(e) => setDisplayName(e.target.value)}
-            width={8}
-          />
+          {!isAuthenticated && (
+            <Form.Input
+              value={reduxDisplayName || displayName}
+              placeholder={"Display Name"}
+              disabled={reduxDisplayName || loading}
+              error={errors.displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              width={8}
+            />
+          )}
           <Form.Field width={4}>
             <Button
               size="small"
