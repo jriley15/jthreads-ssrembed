@@ -7,7 +7,7 @@ import { selectThread } from "../redux/threadSlice";
 import useAuth from "../hooks/useAuth";
 
 export default function Heading({ thread }) {
-  const { isAuthenticated, openJThreadsSignin, logout } = useAuth();
+  const { isAuthenticated, openJThreadsSignin, logout, claims } = useAuth();
 
   return (
     <Box justify="space-between" alignItems="center">
@@ -24,7 +24,11 @@ export default function Heading({ thread }) {
           <Header as="h3" color="grey">
             <Box>
               <Icon name="lock" style={{ marginRight: 6, fontSize: 18 }} />
-              <span>Sign in</span>
+              <span>
+                {isAuthenticated
+                  ? `Signed in as ${claims?.displayName}`
+                  : "Sign in"}
+              </span>
             </Box>
           </Header>
         }
