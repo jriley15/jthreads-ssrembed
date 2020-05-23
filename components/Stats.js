@@ -14,7 +14,7 @@ export default function Stats() {
     // post and increment likes
     setLikeLoading(true);
     setDisableLikes(true);
-    let response = await post("https://jthreadsapi.jrdn.tech/Thread/Rate", {
+    let response = await post("/Thread/Rate", {
       type: 1,
       threadId: thread.threadId,
     });

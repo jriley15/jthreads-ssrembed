@@ -13,13 +13,10 @@ import { getDateString } from "../../util/dateHelper";
 import CommentBody from "./CommentBody";
 import CommentReplies from "./CommentReplies";
 import { post } from "../../util/fetcher";
+import CreateReply from "./CreateReply";
 
 export default function Comment({ commentIndex, comment }) {
-  const {
-    toggleShowReplies,
-    incrementLikes,
-    incrementDislikes,
-  } = useComments();
+  const { incrementLikes, incrementDislikes } = useComments();
   const [likedComment, setLikedComment] = useState(false);
   const [dislikedComment, setDislikedComment] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
@@ -30,7 +27,7 @@ export default function Comment({ commentIndex, comment }) {
   const handleLikeComment = async () => {
     if (!likedComment) {
       setLikeLoading(true);
-      let response = await post("https://jthreadsapi.jrdn.tech/Comment/Rate", {
+      let response = await post("/Comment/Rate", {
         type: 1,
         commentId: comment.commentId,
       });
@@ -45,7 +42,7 @@ export default function Comment({ commentIndex, comment }) {
   const handleDislikeComment = async () => {
     if (!dislikedComment) {
       setDislikeLoading(true);
-      let response = await post("https://jthreadsapi.jrdn.tech/Comment/Rate", {
+      let response = await post("/Comment/Rate", {
         type: 0,
         commentId: comment.commentId,
       });
@@ -129,26 +126,7 @@ export default function Comment({ commentIndex, comment }) {
               </SemanticComment.Action>
             </>
           )}
-          {replying && (
-            <Form style={{ paddingTop: "1rem" }}>
-              <Form.Field width={12}>
-                <Form.TextArea
-                  value={""}
-                  onChange={(e) => {}}
-                  placeholder={"Leave a reply"}
-                  rows={2}
-                  style={{ height: 60, resize: "none" }}
-                  disabled={false}
-                  error={false}
-                />
-              </Form.Field>
-              <Form.Field onClick={() => {}}>
-                <Button size="small" loading={false} disabled={false}>
-                  Send
-                </Button>
-              </Form.Field>
-            </Form>
-          )}
+          {replying && <CreateReply comment={comment} />}
         </SemanticComment.Actions>
       </SemanticComment.Content>
       {showReplies && (

@@ -8,6 +8,7 @@ import Box from "../shared/Box";
 import { fetcher } from "../../util/fetcher";
 import useSWR from "swr";
 import CommentPlaceholder from "./CommentPlaceholder";
+import { API_URL } from "../../util/config";
 
 const CommentsPerPage = 10;
 
@@ -16,14 +17,10 @@ export default function Comments() {
   const { thread, pageIndex, setPageIndex, sortType } = useThread();
   const [loading, setLoading] = useState(false);
 
-  const {
-    data,
-    error,
-    revalidate,
-  } = useSWR(
-    `https://jthreadsapi.jrdn.tech/Comment/Search?threadId=${
-      thread.threadId
-    }&pageIndex=${pageIndex - 1}&sortType=${sortType}`,
+  const { data, error, revalidate } = useSWR(
+    `/Comment/Search?threadId=${thread.threadId}&pageIndex=${
+      pageIndex - 1
+    }&sortType=${sortType}`,
     fetcher,
     { refreshInterval: 30000 }
   );

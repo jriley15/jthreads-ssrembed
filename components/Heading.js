@@ -3,11 +3,11 @@ import styles from "../public/styles/Heading.module.scss";
 import Box from "./shared/Box";
 import { Icon, Header, Dropdown } from "semantic-ui-react";
 import { selectAuth } from "../redux/authSlice";
-import { useSelector } from "react-redux";
 import { selectThread } from "../redux/threadSlice";
+import useAuth from "../hooks/useAuth";
 
 export default function Heading({ thread }) {
-  const { isAuthenticated } = useSelector(selectAuth);
+  const { isAuthenticated } = useAuth();
 
   return (
     <Box justify="space-between" alignItems="center">

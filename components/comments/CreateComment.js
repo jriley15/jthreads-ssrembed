@@ -14,13 +14,15 @@ import {
 } from "semantic-ui-react";
 import Box from "../shared/Box";
 import styles from "../../public/styles/Headers.module.scss";
-import { post } from "../../util/fetcher";
+import { post, fetcher } from "../../util/fetcher";
 import useThread from "../../hooks/useThread";
 import useComments from "../../hooks/useComments";
 import { SortType } from "../../redux/threadSlice";
+import useAuth from "../../hooks/useAuth";
+import { API_URL } from "../../util/config";
 
 export default function CreateComment() {
-  const { isAuthenticated, claims } = useSelector(selectAuth);
+  const { isAuthenticated, claims } = useAuth();
   const { setSortType, setPageIndex } = useThread();
   const { refresh } = useComments();
   const [comment, setComment] = useState("");
@@ -28,25 +30,35 @@ export default function CreateComment() {
   const { thread } = useThread();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const {
+    displayName: reduxDisplayName,
+    setDisplayName: setReduxDisplayName,
+  } = useAuth();
 
-  // const fetcher = (url) =>
-  //   fetch(url, { credentials: "include" }).then((r) => r.json());
-  // const { data, error } = useSWR(
-  //   "https://jthreadsapi.jrdn.tech/User/Me",
-  //   fetcher
-  // );
+  const { data, error } = useSWR(
+    `/${isAuthenticated ? "User" : "Guest"}/Me`,
+    fetcher
+  );
 
-  // useEffect(() => {
-  //   if (data) setUser(data);
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      if (data.id) {
+        //setUser(data);
+      } else {
+        setReduxDisplayName(data.name);
+      }
+    }
+  }, [data]);
 
   const handleSendComment = async () => {
     if (hasErrors()) {
       return;
     }
-    setErrors({});
+    if (!isAuthenticated) {
+      setReduxDisplayName(displayName);
+    }
     setLoading(true);
-    let response = await post("https://jthreadsapi.jrdn.tech/Comment/Create", {
+    let response = await post("/Comment/Create", {
       threadId: thread.threadId,
       namespaceId: thread.namespace.namespaceId,
       body: comment,
@@ -107,8 +119,9 @@ export default function CreateComment() {
                 onChange={(e) => {
                   setDisplayName(e.target.value);
                 }}
-                disabled={loading}
+                disabled={loading || reduxDisplayName}
                 error={errors.displayName}
+                value={reduxDisplayName || displayName}
               />
             )}
           </Grid.Column>

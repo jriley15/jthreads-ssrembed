@@ -9,8 +9,8 @@ export default function CommentReply({ reply, index }) {
     <Comment
       key={reply.commentId}
       style={{
-        marginTop: "1rem",
-        marginBottom: "1rem",
+        paddingTop: "0.75rem",
+        paddingBottom: "0.75rem",
         // backgroundColor:
         //   reply.commentId === newComment
         //     ? "rgba( 250, 223, 173, 0.2)"

@@ -1,13 +1,15 @@
 export const fetcher = async (url) => {
-  let { data } = await fetch(url, {
-    credentials: "include",
-  }).then((r) => r.json());
-
+  let { data } = await get(url);
   return data;
 };
 
+export const get = (url) =>
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+    credentials: "include",
+  }).then((r) => r.json());
+
 export const post = (url, body) =>
-  fetch(url, {
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
     credentials: "include",
     headers: {
       "content-type": "application/json",
