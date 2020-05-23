@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../public/styles/Heading.module.scss";
 import Box from "./shared/Box";
 import { Icon, Header, Dropdown } from "semantic-ui-react";
@@ -7,7 +7,7 @@ import { selectThread } from "../redux/threadSlice";
 import useAuth from "../hooks/useAuth";
 
 export default function Heading({ thread }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, openJThreadsSignin, logout } = useAuth();
 
   return (
     <Box justify="space-between" alignItems="center">
@@ -31,9 +31,41 @@ export default function Heading({ thread }) {
         button
         labeled
       >
-        <Dropdown.Menu>
-          <Dropdown.Item>Test</Dropdown.Item>
-        </Dropdown.Menu>
+        {!isAuthenticated ? (
+          <Dropdown.Menu>
+            <Dropdown.Item
+              text={
+                <>
+                  <Icon name="comments" />
+                  JThreads
+                </>
+              }
+              onClick={() => {
+                openJThreadsSignin();
+              }}
+            />
+            <Dropdown.Item
+              text={
+                <span style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    style={{
+                      width: "1em",
+                      marginRight: "1rem",
+                    }}
+                    src="https://cdn.aircomechanical.com/wp-content/uploads/2018/12/google-review-button.png"
+                  />{" "}
+                  Google
+                </span>
+              }
+            />
+            <Dropdown.Item text="Facebook" icon="facebook blue" disabled />
+            <Dropdown.Item text="Twitter" icon="twitter blue" disabled />
+          </Dropdown.Menu>
+        ) : (
+          <Dropdown.Menu>
+            <Dropdown.Item text="Logout" icon="close" onClick={logout} />
+          </Dropdown.Menu>
+        )}
       </Dropdown>
     </Box>
   );

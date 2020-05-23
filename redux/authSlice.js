@@ -23,7 +23,13 @@ export const authSlice = createSlice({
     },
     authenticate: (state, action) => {
       state.isAuthenticated = true;
-      state.claims = action.payload;
+      if (action.payload) {
+        state.claims = action.payload;
+      }
+    },
+    logout: (state) => {
+      state.isAuthenticated = false;
+      state.claims = {};
     },
     setDisplayName: (state, action) => {
       state.displayName = action.payload;
@@ -31,7 +37,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { authenticate, setDisplayName } = authSlice.actions;
+export const { authenticate, setDisplayName, logout } = authSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This

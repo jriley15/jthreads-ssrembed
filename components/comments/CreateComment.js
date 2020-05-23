@@ -19,7 +19,6 @@ import useThread from "../../hooks/useThread";
 import useComments from "../../hooks/useComments";
 import { SortType } from "../../redux/threadSlice";
 import useAuth from "../../hooks/useAuth";
-import { API_URL } from "../../util/config";
 
 export default function CreateComment() {
   const { isAuthenticated, claims } = useAuth();
@@ -34,21 +33,6 @@ export default function CreateComment() {
     setDisplayName: setReduxDisplayName,
   } = useAuth();
   const [displayName, setDisplayName] = useState(reduxDisplayName);
-
-  const { data, error } = useSWR(
-    `/${isAuthenticated ? "User" : "Guest"}/Me`,
-    fetcher
-  );
-
-  useEffect(() => {
-    if (data) {
-      if (data.id) {
-        //setUser(data);
-      } else {
-        setReduxDisplayName(data.name);
-      }
-    }
-  }, [data]);
 
   const handleSendComment = async () => {
     if (hasErrors()) {
@@ -94,7 +78,7 @@ export default function CreateComment() {
       <Comment>
         <Comment.Avatar
           src={
-            claims?.AvatarUrl ??
+            claims?.avatarUrl ??
             "https://bestnycacupuncturist.com/wp-content/uploads/2016/11/anonymous-avatar-sm.jpg"
           }
         />
@@ -143,20 +127,38 @@ export default function CreateComment() {
         {!isAuthenticated && (
           <Segment basic textAlign="center">
             <Header as="h5" className={styles.smallMargin}>
-              Sign up <a>here</a>
+              Sign up{" "}
+              <a
+                href={`${process.env.NEXT_PUBLIC_LANDING_URL}/register`}
+                target="_blank"
+              >
+                here
+              </a>
             </Header>
             <Header as="h5" color="grey" className={styles.smallMargin}>
               Or sign in with
             </Header>
             <Box justify="center" alignItems="center">
-              <Button circular color="twitter" icon="twitter" />
-              <Button circular icon>
+              <Button circular icon className={styles.loginButton}>
                 <img
                   style={{ width: "1.0em" }}
                   src="https://cdn.aircomechanical.com/wp-content/uploads/2018/12/google-review-button.png"
                 />
               </Button>
-              <Button circular color="facebook" icon="facebook" />
+              <Button
+                circular
+                color="twitter"
+                icon="twitter"
+                disabled
+                className={styles.loginButton}
+              />
+              <Button
+                circular
+                color="facebook"
+                icon="facebook"
+                disabled
+                className={styles.loginButton}
+              />
             </Box>
           </Segment>
         )}
