@@ -17,7 +17,7 @@ export default function CommentBody({ body }) {
           {!expanded ? (
             <>
               {formattedBody}
-              ..{" "}
+              ...
               <a
                 href=""
                 onClick={(e) => {
@@ -25,7 +25,7 @@ export default function CommentBody({ body }) {
                   e.preventDefault();
                 }}
               >
-                Read more
+                <span style={{ marginLeft: "6px" }}>Read more</span>
               </a>
             </>
           ) : (
@@ -38,8 +38,7 @@ export default function CommentBody({ body }) {
                   e.preventDefault();
                 }}
               >
-                {" "}
-                Show less
+                <span style={{ marginLeft: "6px" }}>Show less</span>
               </a>
             </>
           )}

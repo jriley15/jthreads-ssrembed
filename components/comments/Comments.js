@@ -22,7 +22,9 @@ export default function Comments() {
       pageIndex - 1
     }&sortType=${sortType}`,
     fetcher,
-    { refreshInterval: 30000 }
+    {
+      /*refreshInterval: 30000*/
+    }
   );
 
   useEffect(() => {

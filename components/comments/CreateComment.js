@@ -26,7 +26,6 @@ export default function CreateComment() {
   const { setSortType, setPageIndex } = useThread();
   const { refresh } = useComments();
   const [comment, setComment] = useState("");
-  const [displayName, setDisplayName] = useState("");
   const { thread } = useThread();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -34,6 +33,7 @@ export default function CreateComment() {
     displayName: reduxDisplayName,
     setDisplayName: setReduxDisplayName,
   } = useAuth();
+  const [displayName, setDisplayName] = useState(reduxDisplayName);
 
   const { data, error } = useSWR(
     `/${isAuthenticated ? "User" : "Guest"}/Me`,
@@ -54,7 +54,7 @@ export default function CreateComment() {
     if (hasErrors()) {
       return;
     }
-    if (!isAuthenticated) {
+    if (!isAuthenticated && displayName && !reduxDisplayName) {
       setReduxDisplayName(displayName);
     }
     setLoading(true);
@@ -80,7 +80,7 @@ export default function CreateComment() {
     } else {
       delete errorsCopy.comment;
     }
-    if (!displayName && !isAuthenticated) {
+    if (!displayName && !isAuthenticated && !reduxDisplayName) {
       errorsCopy = { ...errorsCopy, displayName: "Required" };
     } else {
       delete errorsCopy.displayName;

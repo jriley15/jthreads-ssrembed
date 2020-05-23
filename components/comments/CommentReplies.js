@@ -1,20 +1,17 @@
 import React, { useEffect, useState, useMemo } from "react";
-import useComments from "../../hooks/useComments";
 import useThread from "../../hooks/useThread";
 import { Comment, Form, Button } from "semantic-ui-react";
 import useSWR from "swr";
 import CommentPlaceholder from "./CommentPlaceholder";
 import CommentReply from "./CommentReply";
 import { fetcher } from "../../util/fetcher";
-import Box from "../shared/Box";
 
-export default function CommentReplies({ comment, commentIndex }) {
-  const { setReplies } = useComments();
+export default function CommentReplies({ comment, replies, setReplies }) {
   const { thread } = useThread();
   const [repliesPageIndex, setRepliesPageIndex] = useState(0);
   const [repliesLoading, setRepliesLoading] = useState(false);
 
-  const { data, error } = useSWR(
+  const { data, error, revalidate } = useSWR(
     `/Comment/Search?threadId=${thread.threadId}&pageIndex=${
       repliesPageIndex || 0
     }&parentId=${comment.commentId}&pageSize=5`,
@@ -26,18 +23,19 @@ export default function CommentReplies({ comment, commentIndex }) {
   };
 
   useEffect(() => {
-    if (comment.replies && repliesPageIndex === 0) return;
+    if (replies && repliesPageIndex === 0) return;
     if (!data) {
       setRepliesLoading(true);
     } else {
-      setReplies(commentIndex, data);
+      setReplies(replies ? [...replies, ...data] : data);
       setRepliesLoading(false);
     }
   }, [data]);
 
   const remainingReplies = useMemo(() => {
-    return comment.replyCount - (comment.replies?.length ?? 0);
-  }, [comment]);
+    const left = comment.replyCount - (replies?.length ?? 0);
+    return left > 5 ? 5 : left;
+  }, [replies, comment]);
 
   return (
     <div
@@ -63,7 +61,7 @@ export default function CommentReplies({ comment, commentIndex }) {
         />
       </div>
       <Comment.Group size="large">
-        {comment.replies?.map((reply, replyIndex) => (
+        {replies?.map((reply, replyIndex) => (
           <CommentReply
             key={reply.commentId}
             index={replyIndex}
@@ -80,7 +78,7 @@ export default function CommentReplies({ comment, commentIndex }) {
           </>
         )}
 
-        {comment.replies?.length < comment.replyCount && (
+        {replies?.length < comment.replyCount && (
           <Form.Field>
             <Button
               size="small"

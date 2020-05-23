@@ -3,8 +3,6 @@ import { Comment } from "semantic-ui-react";
 import CommentBody from "./CommentBody";
 
 export default function CommentReply({ reply, index }) {
-  useEffect(() => {}, [reply]);
-
   return (
     <Comment
       key={reply.commentId}
@@ -17,9 +15,18 @@ export default function CommentReply({ reply, index }) {
         //     : "inherit",
       }}
     >
-      <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/jenny.jpg" />{" "}
+      <Comment.Avatar
+        src={
+          reply.user?.avatarUrl ||
+          `https://avatars.dicebear.com/v2/jdenticon/${
+            reply.user?.userId || reply.guest?.guestId
+          }.svg`
+        }
+      />{" "}
       <Comment.Content>
-        <Comment.Author as="a">{reply.user?.displayName}</Comment.Author>
+        <Comment.Author as="a">
+          {reply.user?.displayName || reply.guest?.name}
+        </Comment.Author>
         <span style={{ paddingLeft: 8 }}>·</span>
         <Comment.Metadata>
           <div>Just now</div>

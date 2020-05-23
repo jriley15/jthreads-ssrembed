@@ -16,13 +16,18 @@ import { post } from "../../util/fetcher";
 import CreateReply from "./CreateReply";
 
 export default function Comment({ commentIndex, comment }) {
-  const { incrementLikes, incrementDislikes } = useComments();
+  const { incrementLikes, incrementDislikes, comments } = useComments();
   const [likedComment, setLikedComment] = useState(false);
   const [dislikedComment, setDislikedComment] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
   const [dislikeLoading, setDislikeLoading] = useState(false);
   const [replying, setReplying] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
+  const [replies, setReplies] = useState();
+
+  const stopReplying = () => {
+    setReplying(false);
+  };
 
   const handleLikeComment = async () => {
     if (!likedComment) {
@@ -53,6 +58,13 @@ export default function Comment({ commentIndex, comment }) {
       setDislikeLoading(false);
     }
   };
+
+  // useEffect(() => {
+  //   if (!replies && showReplies) {
+  //     console.log("replies emptied");
+  //   }
+  //   //setShowReplies(false);
+  // }, [replies]);
 
   return (
     <SemanticComment
@@ -126,11 +138,17 @@ export default function Comment({ commentIndex, comment }) {
               </SemanticComment.Action>
             </>
           )}
-          {replying && <CreateReply comment={comment} />}
+          {replying && (
+            <CreateReply comment={comment} stopReplying={stopReplying} />
+          )}
         </SemanticComment.Actions>
       </SemanticComment.Content>
       {showReplies && (
-        <CommentReplies comment={comment} commentIndex={commentIndex} />
+        <CommentReplies
+          comment={comment}
+          replies={replies}
+          setReplies={setReplies}
+        />
       )}
     </SemanticComment>
   );
