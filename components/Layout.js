@@ -43,7 +43,7 @@ export default function Layout({ children }) {
 
     window.addEventListener("message", handleMessage);
 
-    window.parent.postMessage("ready", "*");
+    if (window.parent) window.parent.postMessage("ready", "*");
 
     return () => {
       window.removeEventListener("message", handleMessage);

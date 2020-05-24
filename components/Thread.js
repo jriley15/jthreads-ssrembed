@@ -28,13 +28,13 @@ function Thread() {
     const observer = new ResizeObserver((entries) => {
       // Only care about the first element, we expect one element ot be watched
       const { height } = entries[0].contentRect;
-      window.parent.postMessage({ height: height }, "*");
+      if (window.parent) window.parent.postMessage({ height: height }, "*");
     });
 
     observer.observe(containerRef.current);
 
     return () => {
-      observer.unobserve();
+      observer.unobserve(containerRef.current);
     };
   }, []);
 
