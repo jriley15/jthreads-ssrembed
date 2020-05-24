@@ -18,6 +18,7 @@ import Comments from "./comments/Comments";
 import useThread from "../hooks/useThread";
 import { Container } from "next/app";
 import Layout from "./Layout";
+import ResizeObserver from "resize-observer-polyfill";
 
 function Thread() {
   const { isAuthenticated } = useSelector(selectAuth);
