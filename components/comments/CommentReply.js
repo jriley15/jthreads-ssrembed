@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Comment } from "semantic-ui-react";
 import CommentBody from "./CommentBody";
+import { getDateString } from "../../util/dateHelper";
 
 export default function CommentReply({ reply, index }) {
   return (
@@ -29,7 +30,7 @@ export default function CommentReply({ reply, index }) {
         </Comment.Author>
         <span style={{ paddingLeft: 8 }}>·</span>
         <Comment.Metadata>
-          <div>Just now</div>
+          <div>{getDateString(reply.createdOn)}</div>
         </Comment.Metadata>
         <Comment.Text>
           <CommentBody body={reply.body} />

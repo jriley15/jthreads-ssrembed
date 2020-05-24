@@ -31,7 +31,7 @@ export default function Layout({ children }) {
         if (data === "success") {
           // get Me
           authenticate();
-        } else if (data?.google) {
+        } else if (data?.oauth) {
           if (data?.success) {
             authenticate();
           } else {

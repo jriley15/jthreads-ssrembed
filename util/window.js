@@ -1,6 +1,4 @@
-export const openWindowCentered = (url) => {
-  let w = 400;
-  let h = 500;
+export const openWindowCentered = (url, w, h) => {
   const y =
     (outerHeight === -1 ? window.top.outerHeight : outerHeight) / 2 +
     (screenY === -1 ? window.top.screenY : screenY) -

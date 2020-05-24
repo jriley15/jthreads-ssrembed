@@ -22,12 +22,26 @@ export default function useAuth() {
   }, []);
 
   const openJThreadsSignin = useCallback(() => {
-    openWindowCentered(`${process.env.NEXT_PUBLIC_LANDING_URL}/login`);
+    openWindowCentered(
+      `${process.env.NEXT_PUBLIC_LANDING_URL}/login`,
+      400,
+      500
+    );
   }, []);
 
   const openGoogleSignin = useCallback(() => {
     openWindowCentered(
-      `https://accounts.google.com/o/oauth2/v2/auth?client_id=655937877935-23gvd7f7bhjn9ocu6kaa3ub237i6c080.apps.googleusercontent.com&redirect_uri=${process.env.NEXT_PUBLIC_API_URL}/oauth/google/&response_type=code&scope=profile email&prompt=consent`
+      `https://accounts.google.com/o/oauth2/v2/auth?client_id=655937877935-23gvd7f7bhjn9ocu6kaa3ub237i6c080.apps.googleusercontent.com&redirect_uri=${process.env.NEXT_PUBLIC_API_URL}/oauth/google/&response_type=code&scope=profile email&prompt=consent`,
+      400,
+      500
+    );
+  }, []);
+
+  const openFacebookSignin = useCallback(() => {
+    openWindowCentered(
+      `https://www.facebook.com/v7.0/dialog/oauth?client_id=200437064400153&redirect_uri=${process.env.NEXT_PUBLIC_API_URL}/oauth/facebook/&response_type=code&display=popup&scope=email`,
+      400,
+      500
     );
   }, []);
 
@@ -49,5 +63,6 @@ export default function useAuth() {
     openGoogleSignin,
     authenticate,
     logout,
+    openFacebookSignin,
   };
 }

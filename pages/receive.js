@@ -13,7 +13,7 @@ export default function Receive({ query }) {
       const errors = !success ? JSON.parse(router.query.errors) : [];
 
       window.opener.postMessage(
-        { google: true, success: success, errors: errors },
+        { oauth: true, success: success, errors: errors },
         window.location.origin
       );
       window.close();

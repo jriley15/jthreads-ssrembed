@@ -31,8 +31,8 @@ export default function Filters() {
           icon={<Icon name="share" style={{ marginLeft: 6, marginTop: 2 }} />}
         >
           <Dropdown.Menu>
-            <Dropdown.Item text="Facebook" icon="facebook blue" />
-            <Dropdown.Item text="Twitter" icon="twitter blue" />
+            <Dropdown.Item text="Facebook" icon="facebook blue" disabled />
+            <Dropdown.Item text="Twitter" icon="twitter blue" disabled />
           </Dropdown.Menu>
         </Dropdown>
       </List.Item>

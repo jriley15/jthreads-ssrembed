@@ -13,6 +13,7 @@ export default function Heading({ thread }) {
     logout,
     claims,
     openGoogleSignin,
+    openFacebookSignin,
   } = useAuth();
 
   return (
@@ -71,7 +72,13 @@ export default function Heading({ thread }) {
                 openGoogleSignin();
               }}
             />
-            <Dropdown.Item text="Facebook" icon="facebook blue" disabled />
+            <Dropdown.Item
+              text="Facebook"
+              icon="facebook blue"
+              onClick={() => {
+                openFacebookSignin();
+              }}
+            />
             <Dropdown.Item text="Twitter" icon="twitter blue" disabled />
           </Dropdown.Menu>
         ) : (

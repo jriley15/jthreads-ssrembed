@@ -21,7 +21,6 @@ import { SortType } from "../../redux/threadSlice";
 import useAuth from "../../hooks/useAuth";
 
 export default function CreateComment() {
-  const { isAuthenticated, claims } = useAuth();
   const { setSortType, setPageIndex } = useThread();
   const { refresh } = useComments();
   const [comment, setComment] = useState("");
@@ -29,9 +28,12 @@ export default function CreateComment() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const {
+    isAuthenticated,
+    claims,
     displayName: reduxDisplayName,
     setDisplayName: setReduxDisplayName,
     openGoogleSignin,
+    openFacebookSignin,
   } = useAuth();
   const [displayName, setDisplayName] = useState(reduxDisplayName);
 
@@ -47,7 +49,7 @@ export default function CreateComment() {
       threadId: thread.threadId,
       namespaceId: thread.namespace.namespaceId,
       body: comment,
-      name: displayName,
+      name: reduxDisplayName || displayName,
     });
     setLoading(false);
     if (response.success) {
@@ -155,15 +157,15 @@ export default function CreateComment() {
               </Button>
               <Button
                 circular
-                color="twitter"
-                icon="twitter"
-                disabled
+                color="facebook"
+                icon="facebook"
+                onClick={() => openFacebookSignin()}
                 className={styles.loginButton}
               />
               <Button
                 circular
-                color="facebook"
-                icon="facebook"
+                color="twitter"
+                icon="twitter"
                 disabled
                 className={styles.loginButton}
               />
