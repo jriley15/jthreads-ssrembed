@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Divider,
   Comment as SemanticComment,
@@ -22,39 +22,59 @@ import Layout from "./Layout";
 function Thread() {
   const { isAuthenticated } = useSelector(selectAuth);
   const { thread } = useThread();
+  const containerRef = useRef();
+
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      // Only care about the first element, we expect one element ot be watched
+      const { height } = entries[0].contentRect;
+      window.parent.postMessage({ height: height }, "*");
+    });
+
+    observer.observe(containerRef.current);
+
+    return () => {
+      observer.unobserve();
+    };
+  }, []);
 
   return (
-    <Layout>
-      <Container id="jthread-container">
-        <SemanticComment.Group className={styles.mainCommentGroup} size="large">
-          <Heading thread={thread} />
+    <div ref={containerRef}>
+      <Layout>
+        <Container id="jthread-container">
+          <SemanticComment.Group
+            className={styles.mainCommentGroup}
+            size="large"
+          >
+            <Heading thread={thread} />
+            <Divider />
+            <Box justify="space-between" alignItems="flex-start">
+              <Stats />
+              <Filters />
+            </Box>
+            <Box mt={1}>
+              <CreateComment />
+            </Box>
+            <Comments />
+          </SemanticComment.Group>
           <Divider />
-          <Box justify="space-between" alignItems="flex-start">
-            <Stats />
-            <Filters />
-          </Box>
-          <Box mt={1}>
-            <CreateComment />
-          </Box>
-          <Comments />
-        </SemanticComment.Group>
-        <Divider />
 
-        <List horizontal divided>
-          <List.Item>
-            <Header as="h4">
-              Powered by{" "}
-              <a href="https://jthreads.jrdn.tech" target="_blank">
-                JThreads
-              </a>
-            </Header>
-          </List.Item>
-          <List.Item>
-            <Header as="h6">v1.0</Header>
-          </List.Item>
-        </List>
-      </Container>
-    </Layout>
+          <List horizontal divided>
+            <List.Item>
+              <Header as="h4">
+                Powered by{" "}
+                <a href="https://jthreads.jrdn.tech" target="_blank">
+                  JThreads
+                </a>
+              </Header>
+            </List.Item>
+            <List.Item>
+              <Header as="h6">v1.0</Header>
+            </List.Item>
+          </List>
+        </Container>
+      </Layout>
+    </div>
   );
 }
 
