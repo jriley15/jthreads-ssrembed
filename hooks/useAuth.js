@@ -45,6 +45,14 @@ export default function useAuth() {
     );
   }, []);
 
+  const openInstagramSignin = useCallback(() => {
+    // openWindowCentered(
+    //   `https://api.instagram.com/oauth/authorize/?client_id=200437064400153&redirect_uri=${process.env.NEXT_PUBLIC_API_URL}/oauth/instagram/&response_type=code`,
+    //   400,
+    //   500
+    // );
+  }, []);
+
   const authenticate = useCallback((claims) => {
     dispatch(authenticateAction(claims));
   }, []);
@@ -64,5 +72,6 @@ export default function useAuth() {
     authenticate,
     logout,
     openFacebookSignin,
+    openInstagramSignin,
   };
 }

@@ -34,6 +34,7 @@ export default function CreateComment() {
     setDisplayName: setReduxDisplayName,
     openGoogleSignin,
     openFacebookSignin,
+    openInstagramSignin,
   } = useAuth();
   const [displayName, setDisplayName] = useState(reduxDisplayName);
 
@@ -149,9 +150,10 @@ export default function CreateComment() {
                 onClick={() => {
                   openGoogleSignin();
                 }}
+                style={{ padding: "0.65em" }}
               >
                 <img
-                  style={{ width: "1.0em" }}
+                  style={{ width: "1.2em" }}
                   src="https://cdn.aircomechanical.com/wp-content/uploads/2018/12/google-review-button.png"
                 />
               </Button>
@@ -161,6 +163,25 @@ export default function CreateComment() {
                 icon="facebook"
                 onClick={() => openFacebookSignin()}
                 className={styles.loginButton}
+              />
+              <Button
+                circular
+                icon="instagram"
+                className={styles.loginButton}
+                onClick={() => {
+                  //openInstagramSignin();
+                }}
+                style={{
+                  background:
+                    "radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)",
+                  color: "white",
+                  fontSize: "18px",
+                  padding: ".5em",
+                  cursor: "default",
+                  opacity: ".45!important",
+                  boxShadow: "none!important",
+                  pointerEvents: "none!important",
+                }}
               />
               <Button
                 circular

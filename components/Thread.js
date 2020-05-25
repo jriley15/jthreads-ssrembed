@@ -19,11 +19,13 @@ import useThread from "../hooks/useThread";
 import { Container } from "next/app";
 import Layout from "./Layout";
 import ResizeObserver from "resize-observer-polyfill";
+import { useRouter } from "next/router";
 
 function Thread() {
   const { isAuthenticated } = useSelector(selectAuth);
   const { thread } = useThread();
   const containerRef = useRef();
+  const router = useRouter();
 
   useEffect(() => {
     const observer = new ResizeObserver((entries) => {
@@ -41,6 +43,15 @@ function Thread() {
 
   return (
     <div ref={containerRef}>
+      <style>
+        {`.ui.placeholder,
+            .ui.placeholder .image.header:after,
+            .ui.placeholder .line,
+            .ui.placeholder .line:after,
+            .ui.placeholder > :before {
+              background-color: #${router?.query?.backgroundColor || `FFFFFF`};
+            }`}
+      </style>
       <Layout>
         <Container id="jthread-container">
           <SemanticComment.Group
