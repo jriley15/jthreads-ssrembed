@@ -66,8 +66,8 @@ export default function CreateReply({
 
   return (
     <div>
-      <Form style={{ paddingTop: "1rem" }}>
-        <Form.Field width={12}>
+      <Form style={{ paddingTop: "1rem", maxWidth: 600 }}>
+        <Form.Field width={16}>
           <Form.TextArea
             autoFocus
             value={reply}
@@ -77,6 +77,7 @@ export default function CreateReply({
             disabled={loading}
             error={errors.reply}
             onChange={(e) => setReply(e.target.value)}
+            style={{ width: "100%" }}
           />
         </Form.Field>
         <Form.Group>
@@ -87,7 +88,8 @@ export default function CreateReply({
               disabled={reduxDisplayName || loading}
               error={errors.displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              width={8}
+              width={12}
+              fluid
             />
           )}
           <Form.Field width={4}>

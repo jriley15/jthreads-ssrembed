@@ -176,7 +176,11 @@ export default function Comment({ commentIndex, comment }) {
               >
                 <Popup.Header>Are you sure?</Popup.Header>
                 <Popup.Content>
-                  <Button color="red" onClick={handleDeleteComment}>
+                  <Button
+                    color="red"
+                    onClick={handleDeleteComment}
+                    loading={deleteLoading}
+                  >
                     Yes, Delete
                   </Button>
                 </Popup.Content>

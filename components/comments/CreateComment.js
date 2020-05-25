@@ -178,9 +178,9 @@ export default function CreateComment() {
                   fontSize: "18px",
                   padding: ".5em",
                   cursor: "default",
-                  opacity: ".45!important",
-                  boxShadow: "none!important",
-                  pointerEvents: "none!important",
+                  opacity: ".45",
+                  boxShadow: "none",
+                  pointerEvents: "none",
                 }}
               />
               <Button
