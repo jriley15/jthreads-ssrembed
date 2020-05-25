@@ -35,6 +35,7 @@ export async function getServerSideProps(context) {
   const threadFetch = fetch(`https://jthreadsapi.jrdn.tech/Thread/Init`, {
     headers: {
       "Content-Type": "application/json",
+      cookie: token ? `token=${token}` : "",
     },
     body: JSON.stringify({
       identifier: threadId,

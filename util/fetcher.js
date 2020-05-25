@@ -17,3 +17,9 @@ export const post = (url, body) =>
     body: JSON.stringify(body),
     method: "POST",
   }).then((r) => r.json());
+
+export const remove = (url, body) =>
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+    credentials: "include",
+    method: "DELETE",
+  }).then((r) => r.json());

@@ -7,16 +7,19 @@ import {
   Loader,
   Form,
   Button,
+  Popup,
 } from "semantic-ui-react";
 import useComments from "../../hooks/useComments";
 import { getDateString } from "../../util/dateHelper";
 import CommentBody from "./CommentBody";
 import CommentReplies from "./CommentReplies";
-import { post } from "../../util/fetcher";
+import { post, remove } from "../../util/fetcher";
 import CreateReply from "./CreateReply";
+import useThread from "../../hooks/useThread";
 
 export default function Comment({ commentIndex, comment }) {
-  const { incrementLikes, incrementDislikes, comments } = useComments();
+  const { incrementLikes, incrementDislikes, refresh } = useComments();
+  const { thread } = useThread();
   const [likedComment, setLikedComment] = useState(false);
   const [dislikedComment, setDislikedComment] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
@@ -24,6 +27,7 @@ export default function Comment({ commentIndex, comment }) {
   const [replying, setReplying] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
   const [refreshCounter, setRefreshCounter] = useState([0]);
+  const [deleteLoading, setDeletingLoading] = useState(false);
 
   const refreshReplies = () => {
     setRefreshCounter(refreshCounter + 1);
@@ -34,7 +38,7 @@ export default function Comment({ commentIndex, comment }) {
   };
 
   const handleLikeComment = async () => {
-    if (!likedComment) {
+    if (!likedComment && !likeLoading) {
       setLikeLoading(true);
       let response = await post("/Comment/Rate", {
         type: 1,
@@ -49,7 +53,7 @@ export default function Comment({ commentIndex, comment }) {
   };
 
   const handleDislikeComment = async () => {
-    if (!dislikedComment) {
+    if (!dislikedComment && !dislikeLoading) {
       setDislikeLoading(true);
       let response = await post("/Comment/Rate", {
         type: 0,
@@ -63,12 +67,18 @@ export default function Comment({ commentIndex, comment }) {
     }
   };
 
-  // useEffect(() => {
-  //   if (!replies && showReplies) {
-  //     console.log("replies emptied");
-  //   }
-  //   //setShowReplies(false);
-  // }, [replies]);
+  const handleDeleteComment = async () => {
+    if (!deleteLoading) {
+      setDeletingLoading(true);
+      let response = await remove(
+        `/Comment/Delete?commentId=${comment.commentId}`
+      );
+      if (response.success) {
+        refresh();
+      }
+      setDeletingLoading(false);
+    }
+  };
 
   return (
     <SemanticComment
@@ -140,6 +150,37 @@ export default function Comment({ commentIndex, comment }) {
                 {comment.replyCount +
                   (comment.replyCount > 1 ? " replies" : " reply")}
               </SemanticComment.Action>
+            </>
+          )}
+          {thread.isAdmin && (
+            <>
+              <SemanticComment.Action>|</SemanticComment.Action>
+
+              <Popup
+                on="click"
+                trigger={
+                  <SemanticComment.Action>
+                    {deleteLoading ? (
+                      <Loader
+                        active
+                        inline
+                        size="mini"
+                        className={`${styles.icon}`}
+                      />
+                    ) : (
+                      <Icon name="trash" />
+                    )}
+                    <span>Delete</span>
+                  </SemanticComment.Action>
+                }
+              >
+                <Popup.Header>Are you sure?</Popup.Header>
+                <Popup.Content>
+                  <Button color="red" onClick={handleDeleteComment}>
+                    Yes, Delete
+                  </Button>
+                </Popup.Content>
+              </Popup>
             </>
           )}
           {replying && (

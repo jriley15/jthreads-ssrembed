@@ -20,12 +20,31 @@ import { Container } from "next/app";
 import Layout from "./Layout";
 import ResizeObserver from "resize-observer-polyfill";
 import { useRouter } from "next/router";
+import useSWR from "swr";
+import { fetcher } from "../util/fetcher";
 
 function Thread() {
   const { isAuthenticated } = useSelector(selectAuth);
-  const { thread } = useThread();
+  const { thread, setThread } = useThread();
   const containerRef = useRef();
   const router = useRouter();
+  const { data, error, revalidate } = useSWR(
+    `/Thread/Get/?threadId=${thread.threadId}&namespaceId=${thread.namespace.namespaceId}`,
+    fetcher
+  );
+
+  useEffect(() => {
+    if (data) {
+      setThread(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (thread && !isAuthenticated) {
+      setThread({ ...thread, isAdmin: false });
+    }
+    revalidate();
+  }, [isAuthenticated]);
 
   useEffect(() => {
     const observer = new ResizeObserver((entries) => {

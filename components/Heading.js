@@ -5,6 +5,7 @@ import { Icon, Header, Dropdown } from "semantic-ui-react";
 import { selectAuth } from "../redux/authSlice";
 import { selectThread } from "../redux/threadSlice";
 import useAuth from "../hooks/useAuth";
+import useThread from "../hooks/useThread";
 
 export default function Heading({ thread }) {
   const {
@@ -33,7 +34,9 @@ export default function Heading({ thread }) {
               <Icon name="lock" style={{ marginRight: 6, fontSize: 18 }} />
               <span>
                 {isAuthenticated
-                  ? `Signed in as ${claims?.displayName}`
+                  ? `Signed in as ${claims?.displayName}${
+                      thread.isAdmin ? " (admin)" : ""
+                    }`
                   : "Sign in"}
               </span>
             </Box>

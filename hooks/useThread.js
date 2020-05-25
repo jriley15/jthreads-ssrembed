@@ -6,6 +6,7 @@ import {
   setPageIndex as setPageAction,
   setSortType as setSortTypeAction,
   incrementLikes as incrementLikesAction,
+  setThread as setThreadAction,
 } from "../redux/threadSlice";
 
 export default function useThread() {
@@ -24,6 +25,10 @@ export default function useThread() {
     dispatch(incrementLikesAction());
   };
 
+  const setThread = (thread) => {
+    dispatch(setThreadAction(thread));
+  };
+
   return {
     thread,
     pageIndex,
@@ -31,5 +36,6 @@ export default function useThread() {
     sortType,
     setSortType,
     incrementLikes,
+    setThread,
   };
 }
