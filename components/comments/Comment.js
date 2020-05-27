@@ -106,7 +106,7 @@ export default function Comment({ commentIndex, comment }) {
         <SemanticComment.Metadata>
           {getDateString(comment.createdOn)}
         </SemanticComment.Metadata>
-        <SemanticComment.Text>
+        <SemanticComment.Text className={styles.commentBody}>
           <CommentBody body={comment.body} />
         </SemanticComment.Text>
         <SemanticComment.Actions>

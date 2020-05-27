@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Comment } from "semantic-ui-react";
 import CommentBody from "./CommentBody";
 import { getDateString } from "../../util/dateHelper";
+import styles from "../../public/styles/Comment.module.scss";
 
 export default function CommentReply({ reply, index }) {
   return (
@@ -32,9 +33,12 @@ export default function CommentReply({ reply, index }) {
         <Comment.Metadata>
           <div>{getDateString(reply.createdOn)}</div>
         </Comment.Metadata>
-        <Comment.Text>
+        <Comment.Text className={styles.commentBody}>
           <CommentBody body={reply.body} />
         </Comment.Text>
+        <Comment.Actions>
+          <Comment.Action>Reply</Comment.Action>
+        </Comment.Actions>
       </Comment.Content>
     </Comment>
   );
