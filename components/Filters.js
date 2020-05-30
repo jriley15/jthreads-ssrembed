@@ -48,8 +48,18 @@ export default function Filters() {
                   400
                 );
               }}
-            ></Dropdown.Item>
-            <Dropdown.Item text="Twitter" icon="twitter blue" disabled />
+            />
+            <Dropdown.Item
+              text="Twitter"
+              icon="twitter blue"
+              onClick={() => {
+                openWindowCentered(
+                  `https://twitter.com/intent/tweet?url=${parentHref}`,
+                  600,
+                  400
+                );
+              }}
+            />
           </Dropdown.Menu>
         </Dropdown>
       </List.Item>
