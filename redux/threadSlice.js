@@ -15,6 +15,7 @@ export const threadSlice = createSlice({
     pageIndex: 1,
     sortType: SortType.MostRecent,
     refreshCounter: 0,
+    parentHref: "",
   },
   reducers: {
     clearCache: (state, action) => {
@@ -43,6 +44,9 @@ export const threadSlice = createSlice({
     refresh: (state, action) => {
       state.refreshCounter++;
     },
+    setParentHref: (state, action) => {
+      state.parentHref = action.payload;
+    },
   },
 });
 
@@ -54,6 +58,7 @@ export const {
   incrementLikes,
   clearCache,
   refresh,
+  setParentHref,
 } = threadSlice.actions;
 
 export const selectThread = (state) => state.thread;

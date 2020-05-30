@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import useSWR from "swr";
 import { fetcher } from "../util/fetcher";
+import useThread from "../hooks/useThread";
 
 export default function Layout({ children }) {
   const { authenticate, setDisplayName, isAuthenticated } = useAuth();
+  const { setParentHref } = useThread();
 
   const { data, error, revalidate } = useSWR(
     `/${isAuthenticated ? "User" : "Guest"}/Me`,
@@ -37,6 +39,8 @@ export default function Layout({ children }) {
           } else {
             console.log("error: ", data.errors);
           }
+        } else if (data.href) {
+          setParentHref(data.href);
         }
       }
     };

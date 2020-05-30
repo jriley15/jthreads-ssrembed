@@ -6,7 +6,13 @@ import useComments from "../hooks/useComments";
 import { openWindowCentered } from "../util/window";
 
 export default function Filters() {
-  const { sortType, setSortType, setPageIndex, pageIndex } = useThread();
+  const {
+    sortType,
+    setSortType,
+    setPageIndex,
+    pageIndex,
+    parentHref,
+  } = useThread();
   const { clearCache } = useComments();
 
   const handleSortSelect = (type) => {
@@ -37,7 +43,7 @@ export default function Filters() {
               icon="facebook blue"
               onClick={() => {
                 openWindowCentered(
-                  `https://www.facebook.com/sharer/sharer.php?u=${window.parent?.location.href}`,
+                  `https://www.facebook.com/sharer/sharer.php?u=${parentHref}`,
                   600,
                   400
                 );

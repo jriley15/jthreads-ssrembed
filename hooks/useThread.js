@@ -7,6 +7,7 @@ import {
   setSortType as setSortTypeAction,
   incrementLikes as incrementLikesAction,
   setThread as setThreadAction,
+  setParentHref as setParentHrefAction,
 } from "../redux/threadSlice";
 
 export default function useThread() {
@@ -29,6 +30,10 @@ export default function useThread() {
     dispatch(setThreadAction(thread));
   };
 
+  const setParentHref = (href) => {
+    dispatch(setParentHrefAction(thread));
+  };
+
   return {
     thread,
     pageIndex,
@@ -37,5 +42,6 @@ export default function useThread() {
     setSortType,
     incrementLikes,
     setThread,
+    setParentHref,
   };
 }
