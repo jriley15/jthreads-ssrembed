@@ -6,6 +6,7 @@ export const authSlice = createSlice({
     isAuthenticated: false,
     claims: {},
     displayName: "",
+    guestId: 0,
   },
   reducers: {
     increment: (state) => {
@@ -36,10 +37,18 @@ export const authSlice = createSlice({
     setDisplayName: (state, action) => {
       state.displayName = action.payload;
     },
+    setGuestId: (state, action) => {
+      state.guestId = action.payload;
+    },
   },
 });
 
-export const { authenticate, setDisplayName, logout } = authSlice.actions;
+export const {
+  authenticate,
+  setDisplayName,
+  logout,
+  setGuestId,
+} = authSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This

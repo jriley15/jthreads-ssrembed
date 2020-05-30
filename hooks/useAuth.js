@@ -6,6 +6,7 @@ import {
 import {
   setDisplayName as setDisplayNameAction,
   logout as logoutAction,
+  setGuestId as setGuestIdAction,
 } from "../redux/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import useSWR from "swr";
@@ -19,6 +20,10 @@ export default function useAuth() {
 
   const setDisplayName = useCallback((displayName) => {
     dispatch(setDisplayNameAction(displayName));
+  }, []);
+
+  const setGuestId = useCallback((guestId) => {
+    dispatch(setGuestIdAction(guestId));
   }, []);
 
   const openJThreadsSignin = useCallback(() => {
@@ -73,5 +78,6 @@ export default function useAuth() {
     logout,
     openFacebookSignin,
     openInstagramSignin,
+    setGuestId,
   };
 }

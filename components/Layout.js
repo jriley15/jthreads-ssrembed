@@ -5,7 +5,12 @@ import { fetcher } from "../util/fetcher";
 import useThread from "../hooks/useThread";
 
 export default function Layout({ children }) {
-  const { authenticate, setDisplayName, isAuthenticated } = useAuth();
+  const {
+    authenticate,
+    setDisplayName,
+    isAuthenticated,
+    setGuestId,
+  } = useAuth();
   const { setParentHref } = useThread();
 
   const { data, error, revalidate } = useSWR(
@@ -18,8 +23,9 @@ export default function Layout({ children }) {
       if (data.id) {
         //setUser(data);
         authenticate(data);
-      } else {
+      } else if (data.name) {
         setDisplayName(data.name);
+        setGuestId(data.guestId);
       }
     }
   }, [data]);

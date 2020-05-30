@@ -35,6 +35,7 @@ export default function CreateComment() {
     openGoogleSignin,
     openFacebookSignin,
     openInstagramSignin,
+    guestId,
   } = useAuth();
   const [displayName, setDisplayName] = useState(reduxDisplayName);
 
@@ -77,15 +78,19 @@ export default function CreateComment() {
     return Object.keys(errorsCopy)?.length > 0;
   };
 
+  const avatar = useMemo(() => {
+    if (claims?.avatarUrl) {
+      return claims.avatarUrl;
+    } else if (guestId > 0) {
+      return `https://avatars.dicebear.com/v2/jdenticon/${guestId}.svg`;
+    }
+    return "https://bestnycacupuncturist.com/wp-content/uploads/2016/11/anonymous-avatar-sm.jpg";
+  }, [guestId, claims]);
+
   return (
     <>
       <Comment>
-        <Comment.Avatar
-          src={
-            claims?.avatarUrl ??
-            "https://bestnycacupuncturist.com/wp-content/uploads/2016/11/anonymous-avatar-sm.jpg"
-          }
-        />
+        <Comment.Avatar src={avatar} />
       </Comment>
       <Form reply style={{ marginLeft: "1rem", width: "100%" }}>
         <Form.TextArea
