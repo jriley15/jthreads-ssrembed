@@ -31,7 +31,7 @@ export default function useThread() {
   };
 
   const setParentHref = (href) => {
-    dispatch(setParentHrefAction(thread));
+    dispatch(setParentHrefAction(href));
   };
 
   return {
