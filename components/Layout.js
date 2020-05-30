@@ -26,6 +26,7 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     const handleMessage = async ({ data, origin }) => {
+      // Secure messages
       if (
         origin === process.env.NEXT_PUBLIC_LANDING_URL ||
         origin === window.location.origin
@@ -39,9 +40,11 @@ export default function Layout({ children }) {
           } else {
             console.log("error: ", data.errors);
           }
-        } else if (data.href) {
-          setParentHref(data.href);
         }
+      }
+      // Non-secure messages
+      if (data.href) {
+        setParentHref(data.href);
       }
     };
 
