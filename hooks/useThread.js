@@ -30,9 +30,9 @@ export default function useThread() {
     dispatch(setThreadAction(thread));
   };
 
-  const setParentHref = (href) => {
+  const setParentHref = useCallback((href) => {
     dispatch(setParentHrefAction(href));
-  };
+  }, []);
 
   return {
     thread,
