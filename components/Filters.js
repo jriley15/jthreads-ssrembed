@@ -3,6 +3,7 @@ import { List, Dropdown, Header, Icon } from "semantic-ui-react";
 import useThread from "../hooks/useThread";
 import { SortType } from "../redux/threadSlice";
 import useComments from "../hooks/useComments";
+import { openWindowCentered } from "../util/window";
 
 export default function Filters() {
   const { sortType, setSortType, setPageIndex, pageIndex } = useThread();
@@ -31,7 +32,17 @@ export default function Filters() {
           icon={<Icon name="share" style={{ marginLeft: 6, marginTop: 2 }} />}
         >
           <Dropdown.Menu>
-            <Dropdown.Item text="Facebook" icon="facebook blue" disabled />
+            <Dropdown.Item
+              text="Facebook"
+              icon="facebook blue"
+              onClick={() => {
+                openWindowCentered(
+                  `https://www.facebook.com/sharer/sharer.php?u=${window.parent?.location.href}`,
+                  600,
+                  400
+                );
+              }}
+            ></Dropdown.Item>
             <Dropdown.Item text="Twitter" icon="twitter blue" disabled />
           </Dropdown.Menu>
         </Dropdown>
