@@ -11,7 +11,7 @@ import {
 } from "../redux/threadSlice";
 
 export default function useThread() {
-  const { thread, pageIndex, sortType } = useSelector(selectThread);
+  const { thread, pageIndex, sortType, parentHref } = useSelector(selectThread);
   const dispatch = useDispatch();
 
   const setPageIndex = (page) => {
@@ -43,5 +43,6 @@ export default function useThread() {
     incrementLikes,
     setThread,
     setParentHref,
+    parentHref,
   };
 }
