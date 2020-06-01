@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Comment } from "semantic-ui-react";
+import { Comment, Icon, Loader } from "semantic-ui-react";
 import CommentBody from "./CommentBody";
 import { getDateString } from "../../util/dateHelper";
 import styles from "../../public/styles/Comment.module.scss";
@@ -38,6 +38,27 @@ export default function CommentReply({ reply, index }) {
         </Comment.Text>
         <Comment.Actions>
           <Comment.Action>Reply</Comment.Action>
+          <Comment.Action>|</Comment.Action>
+          <Comment.Action onClick={() => {}}>
+            <span className={`${styles.action} ${styles.likes}`}>
+              {reply.likes}
+            </span>
+            {false ? (
+              <Loader active inline size="mini" />
+            ) : (
+              <Icon name="thumbs up" />
+            )}
+          </Comment.Action>
+          <Comment.Action onClick={() => {}}>
+            <span className={`${styles.action} ${styles.dislikes}`}>
+              {reply.dislikes}
+            </span>
+            {false ? (
+              <Loader active inline size="mini" />
+            ) : (
+              <Icon name="thumbs down" />
+            )}
+          </Comment.Action>
         </Comment.Actions>
       </Comment.Content>
     </Comment>
