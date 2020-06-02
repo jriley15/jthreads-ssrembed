@@ -49,7 +49,7 @@ export default function CommentReplies({
             />
           ))}
 
-          {(pages?.length ?? 0) * 5 < comment.replyCount && (
+          {(pages?.length ?? 0) * 5 < comment.directReplyCount && (
             <Form.Field>
               <Button
                 size="small"
