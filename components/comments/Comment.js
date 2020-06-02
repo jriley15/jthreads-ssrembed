@@ -45,7 +45,7 @@ export default function Comment({ commentIndex, comment }) {
         commentId: comment.commentId,
       });
       if (response.success) {
-        incrementLikes(commentIndex);
+        //incrementLikes(commentIndex);
         setLikedComment(true);
       }
       setLikeLoading(false);
@@ -60,7 +60,7 @@ export default function Comment({ commentIndex, comment }) {
         commentId: comment.commentId,
       });
       if (response.success) {
-        incrementDislikes(commentIndex);
+        //incrementDislikes(commentIndex);
         setDislikedComment(true);
       }
       setDislikeLoading(false);
@@ -120,7 +120,7 @@ export default function Comment({ commentIndex, comment }) {
           <SemanticComment.Action>|</SemanticComment.Action>
           <SemanticComment.Action onClick={handleLikeComment}>
             <span className={`${styles.action} ${styles.likes}`}>
-              {comment.likes}
+              {comment.likes + (likedComment ? 1 : 0)}
             </span>
             {likeLoading ? (
               <Loader active inline size="mini" />
@@ -130,7 +130,7 @@ export default function Comment({ commentIndex, comment }) {
           </SemanticComment.Action>
           <SemanticComment.Action onClick={handleDislikeComment}>
             <span className={`${styles.action} ${styles.dislikes}`}>
-              {comment.dislikes}
+              {comment.dislikes + (dislikedComment ? 1 : 0)}
             </span>
             {dislikeLoading ? (
               <Loader active inline size="mini" />

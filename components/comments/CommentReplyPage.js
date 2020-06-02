@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useMemo } from "react";
 import useThread from "../../hooks/useThread";
-import { Comment, Form, Button } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
 import useSWR from "swr";
 import CommentPlaceholder from "./CommentPlaceholder";
-import CommentReply from "./CommentReply";
 import { fetcher } from "../../util/fetcher";
+import Comment from "./Comment";
 
 export default function CommentReplyPage({
   comment,
@@ -46,10 +46,10 @@ export default function CommentReplyPage({
   return (
     <>
       {replies?.map((reply, replyIndex) => (
-        <CommentReply
+        <Comment
           key={"cr-" + reply.commentId}
-          index={replyIndex}
-          reply={reply}
+          commentIndex={replyIndex}
+          comment={reply}
         />
       ))}
       {repliesLoading && (
