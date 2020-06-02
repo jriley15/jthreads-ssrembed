@@ -71,6 +71,7 @@ export default function Comments() {
           key={comment.commentId}
           commentIndex={commentIndex}
           comment={comment}
+          revalidate={revalidate}
         />
       ))}
       {loading && (

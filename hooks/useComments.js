@@ -19,9 +19,9 @@ export default function useComments() {
     dispatch(clearCacheAction());
   };
 
-  const setComments = (comments, pageIndex) => {
+  const setComments = useCallback((comments, pageIndex) => {
     dispatch(setCommentsAction({ comments: comments, pageIndex: pageIndex }));
-  };
+  }, []);
 
   const incrementLikes = (commentIndex) => {
     let commentsCopy = [...comments];

@@ -39,9 +39,9 @@ export default function CommentReplyPage({
   }, [refreshCounter]);
 
   const remainingReplies = useMemo(() => {
-    const left = comment.directReplyCount - (replies?.length ?? 0);
+    const left = comment.directReplyCount - 5 * pageIndex;
     return left > 5 ? 5 : left < 0 ? 0 : left;
-  }, [replies, comment]);
+  }, [comment]);
 
   return (
     <>
@@ -57,11 +57,9 @@ export default function CommentReplyPage({
       ))}
       {repliesLoading && (
         <>
-          {new Array(remainingReplies < 5 ? remainingReplies : 5)
-            .fill(0)
-            .map((elem, index) => (
-              <CommentPlaceholder key={"cr-" + index} />
-            ))}
+          {new Array(remainingReplies).fill(0).map((elem, index) => (
+            <CommentPlaceholder key={"crp-" + index} />
+          ))}
         </>
       )}
     </>
