@@ -140,7 +140,7 @@ export default function Comment({ comment, revalidate }) {
               <Icon name="thumbs down" />
             )}
           </SemanticComment.Action>
-          {comment.replyCount > 0 && (
+          {comment.totalReplyCount > 0 && (
             <>
               <SemanticComment.Action>|</SemanticComment.Action>
               <SemanticComment.Action
@@ -149,8 +149,8 @@ export default function Comment({ comment, revalidate }) {
                 }}
               >
                 <Icon name={showReplies ? "caret up" : "caret down"} />
-                {comment.replyCount +
-                  (comment.replyCount > 1 ? " replies" : " reply")}
+                {comment.totalReplyCount +
+                  (comment.totalReplyCount > 1 ? " replies" : " reply")}
               </SemanticComment.Action>
             </>
           )}

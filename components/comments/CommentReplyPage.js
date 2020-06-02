@@ -39,7 +39,7 @@ export default function CommentReplyPage({
   }, [refreshCounter]);
 
   const remainingReplies = useMemo(() => {
-    const left = comment.replyCount - (replies?.length ?? 0);
+    const left = comment.directReplyCount - (replies?.length ?? 0);
     return left > 5 ? 5 : left < 0 ? 0 : left;
   }, [replies, comment]);
 
