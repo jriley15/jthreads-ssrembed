@@ -17,8 +17,8 @@ import { post, remove } from "../../util/fetcher";
 import CreateReply from "./CreateReply";
 import useThread from "../../hooks/useThread";
 
-export default function Comment({ commentIndex, comment }) {
-  const { incrementLikes, incrementDislikes, refresh } = useComments();
+export default function Comment({ comment, revalidate }) {
+  const { refresh } = useComments();
   const { thread } = useThread();
   const [likedComment, setLikedComment] = useState(false);
   const [dislikedComment, setDislikedComment] = useState(false);
@@ -31,6 +31,8 @@ export default function Comment({ commentIndex, comment }) {
 
   const refreshReplies = () => {
     setRefreshCounter(refreshCounter + 1);
+    refresh();
+    revalidate();
   };
 
   const stopReplying = () => {

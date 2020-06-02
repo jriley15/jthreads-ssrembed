@@ -50,6 +50,9 @@ export default function CommentReplyPage({
           key={"cr-" + reply.commentId}
           commentIndex={replyIndex}
           comment={reply}
+          revalidate={() => {
+            revalidate();
+          }}
         />
       ))}
       {repliesLoading && (
