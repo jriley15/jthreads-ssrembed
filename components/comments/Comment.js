@@ -76,7 +76,7 @@ export default function Comment({ comment, revalidate }) {
         `/Comment/Delete?commentId=${comment.commentId}`
       );
       if (response.success) {
-        refresh();
+        refreshReplies();
       }
       setDeletingLoading(false);
     }
