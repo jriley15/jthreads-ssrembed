@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { List, Dropdown, Header, Icon } from "semantic-ui-react";
 import useThread from "../hooks/useThread";
 import { SortType } from "../redux/threadSlice";

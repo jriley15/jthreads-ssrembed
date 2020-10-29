@@ -1,9 +1,9 @@
-import "../public/styles/index.scss";
-import { Provider } from "react-redux";
-import store from "../redux/store";
 import { createWrapper } from "next-redux-wrapper";
+import { Provider } from "react-redux";
+import "../public/styles/index.scss";
 import { authenticate } from "../redux/authSlice";
-import { setThread, setComments } from "../redux/threadSlice";
+import store from "../redux/store";
+import { setComments, setThread } from "../redux/threadSlice";
 
 // This default export is required in a new `pages/_app.js` file.
 function MyApp({ Component, pageProps }) {

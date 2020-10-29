@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { Dropdown, Header, Icon } from "semantic-ui-react";
+import useAuth from "../hooks/useAuth";
 import styles from "../public/styles/Heading.module.scss";
 import Box from "./shared/Box";
-import { Icon, Header, Dropdown } from "semantic-ui-react";
-import { selectAuth } from "../redux/authSlice";
-import { selectThread } from "../redux/threadSlice";
-import useAuth from "../hooks/useAuth";
-import useThread from "../hooks/useThread";
 
 export default function Heading({ thread }) {
   const {

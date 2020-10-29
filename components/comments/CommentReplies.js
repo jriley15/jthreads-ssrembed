@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useMemo } from "react";
-import useThread from "../../hooks/useThread";
 import { Comment, Form, Button } from "semantic-ui-react";
 import CommentReplyPage from "./CommentReplyPage";
 

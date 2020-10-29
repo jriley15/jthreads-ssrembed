@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import useAuth from "../hooks/useAuth";
+import { useEffect } from "react";
 import useSWR from "swr";
-import { fetcher } from "../util/fetcher";
+import useAuth from "../hooks/useAuth";
 import useThread from "../hooks/useThread";
+import { fetcher } from "../util/fetcher";
 
 export default function Layout({ children }) {
   const {

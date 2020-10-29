@@ -8,7 +8,6 @@ import Box from "../shared/Box";
 import { fetcher } from "../../util/fetcher";
 import useSWR from "swr";
 import CommentPlaceholder from "./CommentPlaceholder";
-import { API_URL } from "../../util/config";
 
 const CommentsPerPage = 10;
 

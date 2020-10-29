@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import {
   selectAuth,
   authenticate as authenticateAction,
@@ -9,13 +9,11 @@ import {
   setGuestId as setGuestIdAction,
 } from "../redux/authSlice";
 import { useSelector, useDispatch } from "react-redux";
-import useSWR from "swr";
-import { fetcher, post } from "../util/fetcher";
+import { post } from "../util/fetcher";
 import { openWindowCentered } from "../util/window";
 
 export default function useAuth() {
   const authState = useSelector(selectAuth);
-  const { isAuthenticated } = authState;
   const dispatch = useDispatch();
 
   const setDisplayName = useCallback((displayName) => {

@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "../../public/styles/Comment.module.scss";
 import {
   Icon,
   Comment as SemanticComment,
-  Placeholder,
   Loader,
-  Form,
   Button,
   Popup,
 } from "semantic-ui-react";

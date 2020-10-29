@@ -1,13 +1,12 @@
-import React, { useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  selectThread,
-  setComments,
-  setPageIndex as setPageAction,
-  setSortType as setSortTypeAction,
   incrementLikes as incrementLikesAction,
-  setThread as setThreadAction,
+  selectThread,
+  setPageIndex as setPageAction,
   setParentHref as setParentHrefAction,
+  setSortType as setSortTypeAction,
+  setThread as setThreadAction,
 } from "../redux/threadSlice";
 
 export default function useThread() {

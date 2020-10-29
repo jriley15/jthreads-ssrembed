@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
 import useThread from "../../hooks/useThread";
-import { Form, Button } from "semantic-ui-react";
 import useSWR from "swr";
 import CommentPlaceholder from "./CommentPlaceholder";
 import { fetcher } from "../../util/fetcher";

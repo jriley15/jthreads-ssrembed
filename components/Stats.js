@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { List, Button, Icon, Label, Header } from "semantic-ui-react";
-import { useSelector } from "react-redux";
-import { post } from "../util/fetcher";
+import { Button, Header, Icon, Label, List } from "semantic-ui-react";
 import useThread from "../hooks/useThread";
+import { post } from "../util/fetcher";
 
 export default function Stats() {
   const { thread, incrementLikes } = useThread();

@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
-import { selectAuth } from "../../redux/authSlice";
-import useSWR from "swr";
 import {
   Comment,
   Form,
   Button,
   Header,
-  Divider,
   Segment,
   Grid,
-  Image,
 } from "semantic-ui-react";
 import Box from "../shared/Box";
 import styles from "../../public/styles/Headers.module.scss";

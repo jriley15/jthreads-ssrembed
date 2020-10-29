@@ -1,8 +1,8 @@
-import Thread from "../components/Thread";
-import fetch from "node-fetch";
-import Head from "next/head";
 import { parse } from "cookie";
 import jwtDecode from "jwt-decode";
+import Head from "next/head";
+import fetch from "node-fetch";
+import Thread from "../components/Thread";
 
 export default function Index(props) {
   return (

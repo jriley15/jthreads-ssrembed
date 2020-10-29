@@ -1,10 +1,10 @@
-import React, { useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  selectThread,
-  setComments as setCommentsAction,
   clearCache as clearCacheAction,
   refresh as refreshAction,
+  selectThread,
+  setComments as setCommentsAction,
 } from "../redux/threadSlice";
 
 export default function useComments() {

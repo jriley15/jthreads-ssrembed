@@ -1,27 +1,26 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  Divider,
-  Comment as SemanticComment,
-  List,
-  Header,
-} from "semantic-ui-react";
-import { useSelector } from "react-redux";
-import { selectAuth } from "../redux/authSlice";
-import styles from "../public/styles/Thread.module.scss";
-import Box from "./shared/Box";
-import Heading from "./Heading";
-import Stats from "./Stats";
-import Filters from "./Filters";
-import CreateComment from "./comments/CreateComment";
-import { selectThread } from "../redux/threadSlice";
-import Comments from "./comments/Comments";
-import useThread from "../hooks/useThread";
 import { Container } from "next/app";
-import Layout from "./Layout";
-import ResizeObserver from "resize-observer-polyfill";
 import { useRouter } from "next/router";
+import React, { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import ResizeObserver from "resize-observer-polyfill";
+import {
+  Comment as SemanticComment,
+  Divider,
+  Header,
+  List,
+} from "semantic-ui-react";
 import useSWR from "swr";
+import useThread from "../hooks/useThread";
+import styles from "../public/styles/Thread.module.scss";
+import { selectAuth } from "../redux/authSlice";
 import { fetcher } from "../util/fetcher";
+import Comments from "./comments/Comments";
+import CreateComment from "./comments/CreateComment";
+import Filters from "./Filters";
+import Heading from "./Heading";
+import Layout from "./Layout";
+import Box from "./shared/Box";
+import Stats from "./Stats";
 
 function Thread() {
   const { isAuthenticated } = useSelector(selectAuth);
