@@ -53,6 +53,8 @@ export async function getServerSideProps(context) {
     commentsFetch,
   ]).then((responses) => Promise.all(responses.map((r) => r.json())));
 
+  let end = Date.now();
+
   // Pass data to the page via props
   return {
     props: {
