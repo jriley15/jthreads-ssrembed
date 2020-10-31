@@ -21,7 +21,7 @@ app.prepare().then(() => {
       res.once("finish", () => {
         client.trackMetric({
           name: "SSR Response Time",
-          value: `${Date.now() - start}ms`,
+          value: Date.now() - start,
         });
       });
     }
