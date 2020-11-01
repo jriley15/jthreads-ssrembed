@@ -21,7 +21,7 @@ jobs:
     - name: Build and push image to ACR
       id: build-image
       run: |
-        docker build "$GITHUB_WORKSPACE/usr/src/app" -f  "./Dockerfile" -t jordancontainers.azurecr.io/jthreadsssr-img:${{ github.sha }}
+        docker build "$GITHUB_WORKSPACE/" -f  "./Dockerfile" -t jordancontainers.azurecr.io/jthreadsssr-img:${{ github.sha }}
         docker push jordancontainers.azurecr.io/jthreadsssr-img:${{ github.sha }}
 
     - name: Set Web App ACR authentication
