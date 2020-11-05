@@ -7,7 +7,7 @@ const handle = app.getRequestHandler();
 const port = process.env.PORT || 3000;
 
 const appInsights = require("applicationinsights");
-appInsights.setup("a51bf491-8664-4a21-9910-472a8caff27d").start();
+appInsights.setup("613304a1-17e4-4717-acc2-2c3908fb37ef").start();
 let client = appInsights.defaultClient;
 
 app.prepare().then(() => {
