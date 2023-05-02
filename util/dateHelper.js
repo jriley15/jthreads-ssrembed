@@ -19,7 +19,7 @@ export const getDateString = (date) => {
   } else if (years < 1) {
     return `${months} month${months > 1 ? "s" : ""} ago`;
   } else if (years > 0) {
-    return `${years} years${years > 1 ? "s" : ""} ago`;
+    return `${years} year${years > 1 ? "s" : ""} ago`;
   }
   return "";
 };
