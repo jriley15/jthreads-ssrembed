@@ -154,7 +154,7 @@ export default function CreateComment() {
               >
                 <img
                   style={{ width: "1.2em" }}
-                  src="https://cdn.aircomechanical.com/wp-content/uploads/2018/12/google-review-button.png"
+                  src="/images/google-review-button.png"
                 />
               </Button>
               <Button

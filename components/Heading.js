@@ -63,7 +63,7 @@ export default function Heading({ thread }) {
                       width: "1em",
                       marginRight: "1rem",
                     }}
-                    src="https://cdn.aircomechanical.com/wp-content/uploads/2018/12/google-review-button.png"
+                    src="/images/google-review-button.png"
                   />{" "}
                   Google
                 </span>
